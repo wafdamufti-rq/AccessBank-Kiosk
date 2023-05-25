@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "214247179851",
+    "project_id": "accessbank-2d883",
+    "storage_bucket": "accessbank-2d883.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214247179851:android:911ce7c1d49a8733a06fce",
+        "android_client_info": {
+          "package_name": "com.kiosk.accessbank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214247179851-pgl41asjqfigiudv89164h5klssi9c5r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3tlC9CA3Jv7Ofq9sJYa5K2mfBUXecm1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214247179851-pgl41asjqfigiudv89164h5klssi9c5r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

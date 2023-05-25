@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.AccessBank"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/enter_your_new_type"
+        android:textAppearance="?textAppearanceHeadline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <TableRow>
+
+            <TextView
+                android:padding="10dp"
+                android:text="@string/date"
+                android:textStyle="bold"
+                android:textAppearance="?textAppearanceBody1" />
+
+            <TextView
+                android:id="@+id/text_date"
+                android:padding="3dp"
+                tools:text="Date"
+                android:textAppearance="?textAppearanceBody1" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:padding="10dp"
+                android:textStyle="bold"
+
+                android:text="@string/account_no"
+                android:textAppearance="?textAppearanceBody1" />
+
+            <TextView
+                android:id="@+id/text_account_no"
+                android:padding="3dp"
+                tools:text="Account No"
+                android:textAppearance="?textAppearanceBody1" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:padding="10dp"
+                android:textStyle="bold"
+
+                android:text="@string/phone_number"
+                android:textAppearance="?textAppearanceBody1" />
+
+            <TextView
+                android:id="@+id/text_phone"
+                android:padding="3dp"
+                tools:text="31231231"
+                android:textAppearance="?textAppearanceBody1" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:padding="10dp"
+                android:textStyle="bold"
+
+                android:text="@string/email"
+                android:textAppearance="?textAppearanceBody1" />
+
+            <TextView
+                android:id="@+id/text_email"
+                android:padding="3dp"
+                tools:text="Hahaha@gmail.com"
+                android:textAppearance="?textAppearanceBody1" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/label_new_s"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:text="@string/new_s"
+                android:textAppearance="?textAppearanceBody1" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/button_submit"
+        style="@style/MyTheme.Button.Filled"
+        android:text="@string/submit"
+        app:layout_constraintEnd_toStartOf="@id/button_cancel"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:id="@+id/button_cancel"
+        style="@style/MyTheme.Button.Filled"
+        app:layout_constraintStart_toEndOf="@id/button_submit"
+        android:text="@string/cancel"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

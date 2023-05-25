@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="MyTheme.Button.Outline" parent="@style/Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/grey</item>
+        <item name="android:textAppearance">?textAppearanceSubtitle1</item>
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
+    <style name="MyTheme.Button.Filled" parent="@style/Widget.Material3.Button">
+        <item name="strokeColor">@color/grey</item>
+        <item name="android:textAppearance">?textAppearanceSubtitle1</item>
+        <item name="backgroundTint">@color/teal_200</item>
+    </style>
+</resources>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/selectServiceFragment"
+        android:name="com.kiosk.accessbank.ui.SelectServiceFragment"
+        android:label="SelectServiceFragment">
+        <action
+            android:id="@+id/action_selectServiceFragment_to_selectOptionFragment"
+            app:destination="@id/selectOptionFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_selectServiceFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.kiosk.accessbank.ui.LoginFragment"
+        android:label="LoginFragment">
+        <action
+            android:id="@+id/action_loginFragment_to_verificationFragment"
+            app:destination="@id/verificationFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/verificationFragment"
+        android:name="com.kiosk.accessbank.ui.VerificationFragment"
+        android:label="VerificationFragment">
+        <action
+            android:id="@+id/action_verificationFragment_to_selectAccountFragment"
+            app:destination="@id/selectAccountFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_verificationFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectAccountFragment"
+        android:name="com.kiosk.accessbank.ui.SelectAccountFragment"
+        android:label="SelectAccountFragment">
+        <action
+            android:id="@+id/action_selectAccountFragment_to_selectServiceFragment"
+            app:destination="@id/selectServiceFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_selectAccountFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateInformationFragment"
+        android:name="com.kiosk.accessbank.ui.UpdateInformationFragment"
+        android:label="UpdateInformationFragment" >
+        <argument
+            android:name="updateType"
+            app:argType="com.kiosk.accessbank.util.UpdateType"
+            android:defaultValue="PHONE" />
+        <action
+            android:id="@+id/action_updateInformationFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_updateInformationFragment_to_confirmationUpdateInfoFragment"
+            app:destination="@id/confirmationUpdateInfoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectOptionFragment"
+        android:name="com.kiosk.accessbank.ui.SelectOptionFragment"
+        android:label="SelectOptionFragment">
+        <action
+            android:id="@+id/action_selectOptionFragment_to_updateInformationFragment"
+            app:destination="@id/updateInformationFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_selectOptionFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/confirmationUpdateInfoFragment"
+        android:name="com.kiosk.accessbank.ui.ConfirmationUpdateInfoFragment"
+        android:label="ConfirmationUpdateInfoFragment">
+        <action
+            android:id="@+id/action_confirmationUpdateInfoFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+</navigation>

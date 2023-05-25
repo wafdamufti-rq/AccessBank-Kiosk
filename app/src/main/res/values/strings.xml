@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">AccessBank</string>
+    <string name="hint_account_number">Account Number</string>
+    <string name="enter_your_new_type">Enter your new %1$s</string>
+    <string name="new_s">New %1$s</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone number</string>
+    <string name="account_no">Account No</string>
+    <string name="date">Date</string>
+</resources>

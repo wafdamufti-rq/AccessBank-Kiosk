@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/card_fingerprint"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        android:text="Fingerprint"
+        app:icon="@drawable/baseline_fingerprint_24"
+        app:iconGravity="top"
+        app:iconSize="100dp"
+        app:layout_constraintEnd_toStartOf="@id/card_face_detection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/shapeAppearanceRoundedMedium" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/card_face_detection"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        android:text="Face Recognition"
+        app:icon="@drawable/baseline_tag_faces_24"
+        app:iconGravity="top"
+        app:iconSize="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/card_fingerprint"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/shapeAppearanceRoundedMedium" />
+</androidx.constraintlayout.widget.ConstraintLayout>
