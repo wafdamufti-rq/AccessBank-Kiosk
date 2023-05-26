@@ -8,30 +8,41 @@
     tools:context=".MainActivity"
     xsi:schemaLocation="http://schemas.android.com/apk/res-auto ">
 
-    <TextView
+    <ImageView
         android:id="@+id/title"
-        android:text="Access Bank"
         android:textAppearance="@style/TextAppearance.Material3.DisplayLarge"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="10dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/access_bank_plc_top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_height="wrap_content"/>
 
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:defaultNavHost="true"
+        android:layout_margin="20dp"
+        app:cardBackgroundColor="#A4C519"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:navGraph="@navigation/nav_main"
-        tools:layout="@layout/fragment_login" />
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+
+            app:navGraph="@navigation/nav_main"
+            tools:layout="@layout/fragment_login" />
+
+    </com.google.android.material.card.MaterialCardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

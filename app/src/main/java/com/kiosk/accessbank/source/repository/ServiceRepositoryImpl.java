@@ -19,8 +19,16 @@ public class ServiceRepositoryImpl extends BaseRepository implements ServiceRepo
     @Override
     public Single<ApiResponse<ArrayList<Service>>> getAllServices(String id) {
         ArrayList<Service> list = new ArrayList<>();
-        list.add(new Service(1, "Update Info"));
-        return Single.just(new ApiResponse<ArrayList<Service>>(200, "success", list
+        list.add(new Service(1,"Electricity Token/ Data/Airitme Transfer Purchase"));
+        list.add(new Service(2,"Dispense Error"));
+        list.add(new Service(3,"Balance Enquiry"));
+        list.add(new Service(4,"Local Fund Transfer"));
+        list.add(new Service(5,"Statement of Account"));
+        list.add(new Service(6,"Card Request, Card Blok/ Unblock, PIN Activation"));
+        list.add(new Service(7,"Foreign Fund Transfer"));
+        list.add(new Service(8,"Pay Direct(Cable TV,Lottery, FIRS"));
+        list.add(new Service(9, "Update Info"));
+        return Single.just(new ApiResponse<>(200, "success", list
         ));
     }
 }

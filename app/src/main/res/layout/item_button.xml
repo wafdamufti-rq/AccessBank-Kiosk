@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -9,8 +10,14 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:id="@+id/button"
-        tools:text="click Me"
-        android:layout_width="100dp"
+        tools:text="Electricity Token/ Data/Airitme Transfer Purchase"
+        app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
+        android:textAllCaps="false"
+        android:minWidth="100dp"
+        android:maxWidth="150dp"
+        android:maxHeight="150dp"
+        android:minHeight="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="100dp"/>
 
 </FrameLayout>

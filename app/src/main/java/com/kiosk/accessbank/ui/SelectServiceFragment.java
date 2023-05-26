@@ -56,6 +56,7 @@ public class SelectServiceFragment extends Fragment implements OnServiceListener
     @Override
     public void onClick(Service data) {
         viewModel.setSelectedService(data);
-        NavHostFragment.findNavController(this).navigate(SelectServiceFragmentDirections.actionSelectServiceFragmentToSelectOptionFragment());
+        if (data.getId() == 9)
+            NavHostFragment.findNavController(this).navigate(SelectServiceFragmentDirections.actionSelectServiceFragmentToSelectOptionFragment());
     }
 }

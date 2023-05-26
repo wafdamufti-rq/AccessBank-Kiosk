@@ -4,6 +4,7 @@
 
     <style name="MyTheme.Button.Outline" parent="@style/Widget.Material3.Button.OutlinedButton">
         <item name="strokeColor">@color/grey</item>
+        <item name="backgroundTint">@color/white</item>
         <item name="android:textAppearance">?textAppearanceSubtitle1</item>
         <item name="android:textColor">@color/grey</item>
     </style>
