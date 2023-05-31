@@ -3,8 +3,6 @@ package com.kiosk.accessbank;
 import static android.view.View.GONE;
 
 import android.Manifest;
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -36,12 +34,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 255;
     private static final String[] CAMERA_PERMISSION = new String[]{Manifest.permission.CAMERA};
     private static final int CAMERA_REQUEST_CODE = 10;
+    @Inject
+    public KioskManager kioskManager;
     NavController navController;
     private ActivityMainBinding binding;
     private MainViewModel viewModel;
-
-    @Inject
-    public KioskManager kioskManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +76,13 @@ public class MainActivity extends AppCompatActivity {
             kioskManager.enableKioskMode(!kioskManager.isLockedMode());
             initLabelKioskMode();
         });
+
+        binding.buttonHome.setOnClickListener(v -> goToLoginAsSingleTop());
     }
 
     private void goToLoginAsSingleTop() {
         viewModel.clearState();
-        navController.navigate(R.id.loginFragment,null, new NavOptions.Builder()
+        navController.navigate(R.id.loginFragment, null, new NavOptions.Builder()
                 .setEnterAnim(androidx.navigation.ui.R.anim.nav_default_enter_anim)
                 .setExitAnim(androidx.navigation.ui.R.anim.nav_default_exit_anim)
                 .setPopEnterAnim(androidx.navigation.ui.R.anim.nav_default_pop_enter_anim)
@@ -108,31 +107,49 @@ public class MainActivity extends AppCompatActivity {
             binding.buttonCancel.setVisibility(GONE);
             binding.buttonNext.setVisibility(View.VISIBLE);
             binding.buttonSubmit.setVisibility(GONE);
+            binding.buttonHome.setVisibility(GONE);
+
         } else if (navDestination.getId() == R.id.verificationFragment) {
             binding.buttonBack.setVisibility(GONE);
             binding.buttonCancel.setVisibility(View.VISIBLE);
             binding.buttonNext.setVisibility(GONE);
             binding.buttonSubmit.setVisibility(GONE);
+            binding.buttonHome.setVisibility(GONE);
+
         } else if (navDestination.getId() == R.id.selectAccountFragment) {
             binding.buttonBack.setVisibility(GONE);
             binding.buttonCancel.setVisibility(View.VISIBLE);
             binding.buttonNext.setVisibility(GONE);
             binding.buttonSubmit.setVisibility(GONE);
+            binding.buttonHome.setVisibility(GONE);
+
         } else if (navDestination.getId() == R.id.selectServiceFragment) {
             binding.buttonBack.setVisibility(View.VISIBLE);
             binding.buttonCancel.setVisibility(View.VISIBLE);
             binding.buttonNext.setVisibility(GONE);
             binding.buttonSubmit.setVisibility(GONE);
+            binding.buttonHome.setVisibility(GONE);
+
         } else if (navDestination.getId() == R.id.selectOptionFragment) {
             binding.buttonBack.setVisibility(View.VISIBLE);
             binding.buttonCancel.setVisibility(View.VISIBLE);
             binding.buttonNext.setVisibility(GONE);
             binding.buttonSubmit.setVisibility(GONE);
+            binding.buttonHome.setVisibility(GONE);
+
         } else if (navDestination.getId() == R.id.updateInformationFragment) {
             binding.buttonBack.setVisibility(View.VISIBLE);
             binding.buttonCancel.setVisibility(GONE);
             binding.buttonNext.setVisibility(GONE);
             binding.buttonSubmit.setVisibility(View.VISIBLE);
+            binding.buttonHome.setVisibility(GONE);
+
+        } else if (navDestination.getId() == R.id.confirmationUpdateInfoFragment) {
+            binding.buttonBack.setVisibility(GONE);
+            binding.buttonCancel.setVisibility(GONE);
+            binding.buttonNext.setVisibility(GONE);
+            binding.buttonSubmit.setVisibility(GONE);
+            binding.buttonHome.setVisibility(View.VISIBLE);
         }
     }
 

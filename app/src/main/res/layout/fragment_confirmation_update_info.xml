@@ -3,29 +3,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    tools:background="@drawable/background_content"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/image_state"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/round_check_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.5"
+        android:layout_marginHorizontal="@dimen/margin_default">
+        <androidx.constraintlayout.widget.ConstraintLayout
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:textAppearance="?textAppearanceHeadline6"
-        android:layout_height="wrap_content"
-        android:text="Info updated successfully.\n email sent to your registered email. "
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_state"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+            android:layout_margin="@dimen/margin_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/image_state"
+                app:layout_constraintBottom_toTopOf="@id/title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="@dimen/size_icon_confirmation"
+                android:layout_height="125dp"
+                android:src="@drawable/ic_checklist"
+                />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:textAppearance="?textAppearanceHeadline6"
+                android:layout_height="wrap_content"
+                android:text="Info updated successfully. "
+                android:textAlignment="center"
+                android:textSize="@dimen/text_size_title_confirmation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_state"
+                app:layout_constraintBottom_toTopOf="@id/description"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:textAppearance="?textAppearanceHeadline6"
+                android:layout_height="wrap_content"
+                android:text="Email sent to your registered email. "
+                android:textAlignment="center"
+                android:textSize="@dimen/text_size_description_confirmation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

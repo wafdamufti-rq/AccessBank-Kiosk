@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_text_size">40sp</dimen>
+    <dimen name="width_bottom_menu_size">115dp</dimen>
+    <dimen name="height_bottom_menu_size">50dp</dimen>
+    <dimen name="margin_default">20dp</dimen>
+    <dimen name="button_bottom_text_size">20sp</dimen>
+    <dimen name="height_input_form">80dp</dimen>
+    <dimen name="margin_top_title">24dp</dimen>
+    <dimen name="width_input_number">65dp</dimen>
+    <dimen name="height_input_number">65dp</dimen>
+    <dimen name="text_size_input_number">24sp</dimen>
+    <dimen name="width_card_verify">180dp</dimen>
+    <dimen name="icon_card_verify_size">94dp</dimen>
+    <dimen name="margin_top_verify">52dp</dimen>
+    <dimen name="height_progress_indicator">6dp</dimen>
+    <dimen name="margin_top_progress_indicator_verify">48dp</dimen>
+    <dimen name="text_size_progress_indicator">16sp</dimen>
+    <dimen name="icon_size_button">48dp</dimen>
+    <dimen name="text_size_account_name">36sp</dimen>
+    <dimen name="size_item_button">120dp</dimen>
+    <dimen name="margin_top_icon_item_button">34dp</dimen>
+    <dimen name="size_icon_item_button">30dp</dimen>
+    <dimen name="margin_icon_count">-6sp</dimen>
+    <dimen name="text_size_item_button">10sp</dimen>
+    <dimen name="margin_input_number">8dp</dimen>
+    <dimen name="size_icon_option">65dp</dimen>
+    <dimen name="text_size_table">15sp</dimen>
+    <dimen name="text_size_title_confirmation">20sp</dimen>
+    <dimen name="text_size_description_confirmation">12sp</dimen>
+    <dimen name="size_icon_confirmation">50dp</dimen>
+
+</resources>

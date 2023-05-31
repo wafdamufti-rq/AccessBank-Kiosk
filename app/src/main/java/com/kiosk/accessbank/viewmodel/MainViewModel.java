@@ -163,12 +163,8 @@ public class MainViewModel extends BaseViewModel {
     public void loadAccount() {
         _selectedAccountLiveData.postValue(selectedAccount);
     }
-    
-    public void getUpdateType(){
-        _updateTypeLiveData.postValue(handle.get("updateType"));
-    }
 
-    public void submitUpdate(String toString) {
+    public void submitUpdate(UpdateType updateType, String toString) {
         _updateInformationSubmitTrigger.postValue(false);
        _submittedLiveData.postValue(true);
     }
@@ -183,6 +179,7 @@ public class MainViewModel extends BaseViewModel {
 
             @Override
             public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Long aLong) {
+                if (loggedUser != null)
                     _delayLiveData.postValue(true);
 
             }

@@ -6,11 +6,13 @@
 
     <Button
         android:id="@+id/button_one"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/width_input_number"
+        android:layout_height="@dimen/height_input_number"
         android:text="1"
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
+        android:textSize="@dimen/text_size_input_number"
+
         android:textAppearance="?textAppearanceHeadline2"
         app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,12 +22,14 @@
         android:id="@+id/button_two"
         android:text="2"
         app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/width_input_number"
+        android:layout_height="@dimen/height_input_number"
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
+        android:textSize="@dimen/text_size_input_number"
         android:textAppearance="?textAppearanceHeadline2"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginHorizontal="@dimen/margin_input_number"
+
         app:layout_constraintEnd_toStartOf="@id/button_three"
         app:layout_constraintStart_toEndOf="@id/button_one"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,10 +38,12 @@
         android:id="@+id/button_three"
         android:text="3"
         app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/width_input_number"
+        android:layout_height="@dimen/height_input_number"
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
+        android:textSize="@dimen/text_size_input_number"
+
         android:textAppearance="?textAppearanceHeadline2"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,10 +53,13 @@
         android:id="@+id/button_four"
         android:text="4"
         app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginVertical="20dp"
+        android:layout_width="@dimen/width_input_number"
+        android:layout_height="@dimen/height_input_number"
+        android:layout_marginVertical="@dimen/margin_input_number"
+
         android:backgroundTint="@color/white"
+        android:textSize="@dimen/text_size_input_number"
+
         android:textColor="@color/black"
         android:textAppearance="?textAppearanceHeadline2"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,9 +69,11 @@
         android:id="@+id/button_five"
         android:text="5"
         app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginVertical="20dp"
+        android:layout_width="@dimen/width_input_number"
+        android:layout_height="@dimen/height_input_number"
+        android:layout_marginVertical="@dimen/margin_input_number"
+
+        android:textSize="@dimen/text_size_input_number"
 
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
@@ -75,9 +86,11 @@
         android:id="@+id/button_six"
         android:text="6"
         app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginVertical="20dp"
+        android:layout_width="@dimen/width_input_number"
+        android:layout_height="@dimen/height_input_number"
+        android:layout_marginVertical="@dimen/margin_input_number"
+
+        android:textSize="@dimen/text_size_input_number"
 
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
@@ -89,9 +102,11 @@
         android:id="@+id/button_seven"
         android:text="7"
         app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginVertical="20dp"
+        android:layout_width="@dimen/width_input_number"
+        android:layout_height="@dimen/height_input_number"
+        android:layout_marginVertical="@dimen/margin_input_number"
+
+        android:textSize="@dimen/text_size_input_number"
 
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
@@ -103,11 +118,13 @@
         android:id="@+id/button_eight"
         android:text="8"
         app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/width_input_number"
+        android:layout_height="@dimen/height_input_number"
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
-        android:layout_marginVertical="20dp"
+        android:layout_marginVertical="@dimen/margin_input_number"
+
+        android:textSize="@dimen/text_size_input_number"
 
         android:textAppearance="?textAppearanceHeadline2"
         app:layout_constraintEnd_toStartOf="@id/button_nine"
@@ -117,11 +134,12 @@
     <Button
         android:id="@+id/button_nine"
         android:text="9"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/width_input_number"
+        android:layout_height="@dimen/height_input_number"
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
-        android:layout_marginVertical="20dp"
+        android:layout_marginVertical="@dimen/margin_input_number"
+        android:textSize="@dimen/text_size_input_number"
 
         android:textAppearance="?textAppearanceHeadline2"
         app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
@@ -133,10 +151,12 @@
         android:text="0"
         app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="@dimen/height_input_number"
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
-        android:layout_marginVertical="20dp"
+        android:layout_marginVertical="@dimen/margin_input_number"
+
+        android:textSize="@dimen/text_size_input_number"
 
         android:textAppearance="?textAppearanceHeadline2"
         app:layout_constraintStart_toStartOf="parent"
@@ -150,13 +170,15 @@
         app:iconGravity="textStart"
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
-        android:layout_marginVertical="20dp"
+        android:layout_marginVertical="@dimen/margin_input_number"
+
+        android:textSize="@dimen/text_size_input_number"
 
         android:textAppearance="?textAppearanceHeadline2"
-        app:iconSize="55dp"
+        app:iconSize="@dimen/margin_default"
         app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/width_input_number"
+        android:layout_height="@dimen/height_input_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button_seven" />
 

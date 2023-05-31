@@ -11,7 +11,8 @@
         android:text="Enter your account no."
         android:textAppearance="?textAppearanceHeadline2"
         android:textAlignment="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/margin_top_title"
+        android:textSize="@dimen/title_text_size"
         android:textFontWeight="800"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +31,7 @@
         android:paddingHorizontal="20dp"
         app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
         app:hintEnabled="false"
-        android:layout_height="150dp">
+        android:layout_height="@dimen/height_input_form">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:focusable="false"
@@ -38,6 +39,7 @@
             android:textAlignment="center"
             android:textColorHint="@color/grey"
             android:textAppearance="?textAppearanceHeadline2"
+            android:textSize="@dimen/button_bottom_text_size"
             android:focusedByDefault="false"
             android:focusableInTouchMode="false"
             android:clickable="false"

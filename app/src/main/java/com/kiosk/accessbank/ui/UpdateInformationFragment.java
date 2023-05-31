@@ -42,11 +42,12 @@ public class UpdateInformationFragment extends Fragment {
         initObserver();
         loadData();
 
+        initTitle();
+
     }
 
     private void loadData() {
         viewModel.loadAccount();
-        viewModel.getUpdateType();
     }
 
     private void initObserver() {
@@ -54,11 +55,10 @@ public class UpdateInformationFragment extends Fragment {
         viewModel.updateInformationSubmitTrigger.observe(getViewLifecycleOwner(), aBoolean ->
                 {
                     if (aBoolean != null && aBoolean) {
-                        viewModel.submitUpdate(Objects.requireNonNull(binding.inputForm.getEditText()).getText().toString());
+                        viewModel.submitUpdate( (UpdateType) getArguments().get("updateType"),Objects.requireNonNull(binding.inputForm.getEditText()).getText().toString());
                     }
                 }
          );
-        viewModel.updateTypeLiveData.observe(getViewLifecycleOwner(), this::initTitle);
         viewModel.submittedLiveData.observe(getViewLifecycleOwner(), this::validateSubmit);
     }
 
@@ -68,7 +68,9 @@ public class UpdateInformationFragment extends Fragment {
 
     }
 
-    private void initTitle(UpdateType updateType) {
+    private void initTitle() {
+        UpdateType updateType = (UpdateType) getArguments().get("updateType");
+
         String type = updateType == UpdateType.EMAIL ? getString(R.string.email) : getString(R.string.phone_number);
         binding.title.setText(getResources().getString(R.string.enter_your_new_type, type));
     }
