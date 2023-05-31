@@ -43,11 +43,6 @@ public class SelectAccountFragment extends Fragment implements OnAccountListener
 
         adapter = new ButtonAccountAdapter(this);
         binding.recyclerview.setAdapter(adapter);
-
-        binding.buttonCancel.setOnClickListener(v -> {
-            viewModel.clearState();
-            NavHostFragment.findNavController(SelectAccountFragment.this).navigate(SelectAccountFragmentDirections.actionSelectAccountFragmentToLoginFragment());
-        });
         viewModel.getAccount();
         viewModel.accountsLiveData.observe(getViewLifecycleOwner(), arrayListApiResponse -> {
             if (arrayListApiResponse != null) {

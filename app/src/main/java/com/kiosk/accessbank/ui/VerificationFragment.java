@@ -11,20 +11,21 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.biometric.BiometricPrompt;
-import androidx.camera.core.Camera;
-import androidx.camera.core.Preview;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.kiosk.accessbank.camerax.CameraManager;
 import com.kiosk.accessbank.databinding.FragmentVerificationBinding;
+import com.kiosk.accessbank.fingerprint.FingerprintHandler;
 import com.kiosk.accessbank.viewmodel.MainViewModel;
+import com.zkteco.biometric.FingerprintCaptureListener;
 
-import java.util.concurrent.Executor;
+import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+import dagger.hilt.android.WithFragmentBindings;
+
+@AndroidEntryPoint
 public class VerificationFragment extends Fragment {
 
     private static final String FINGERPRINT_TAG = "fingerprint";
@@ -37,15 +38,24 @@ public class VerificationFragment extends Fragment {
         ORIENTATIONS.append(Surface.ROTATION_270, 270);
     }
 
-    private Preview preview;
-    private Camera camera;
-    private CameraManager cameraManager;
+    @Inject
+     FingerprintHandler fingerprintHandler;
     private FragmentVerificationBinding binding;
-    private Executor executor;
-    private BiometricPrompt biometricPrompt;
-    private androidx.biometric.BiometricPrompt.PromptInfo promptInfo;
-
     private MainViewModel viewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        fingerprintHandler.stopScanning();
+        fingerprintHandler.closeDevice();
+
+    }
 
     @Nullable
     @Override
@@ -58,75 +68,63 @@ public class VerificationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (fingerprintHandler == null ) fingerprintHandler = new FingerprintHandler(this.getContext());
+        fingerprintHandler.openDevice();
+        fingerprintHandler.listener(new FingerprintCaptureListener() {
+            @Override
+            public void captureOK(byte[] bytes) {
+                fingerprintHandler.stopScanning();
+                fingerprintHandler.closeDevice();
 
-        createFingerprint();
-        createCameraManager();
+                Toast.makeText(requireContext(), "This test using hardcoded dummy data", Toast.LENGTH_LONG).show();
+                NavHostFragment.findNavController(VerificationFragment.this).navigate(VerificationFragmentDirections.actionVerificationFragmentToSelectAccountFragment());
+            }
+
+            @Override
+            public void captureError(int i) {
+
+            }
+
+            @Override
+            public void extractOK(byte[] bytes) {
+
+            }
+        });
         initSelection();
         initObserver();
-        cameraManager.startCamera();
 
-        binding.buttonCancel.setOnClickListener(v -> {
-            viewModel.clearState();
-            NavHostFragment.findNavController(VerificationFragment.this).navigate(VerificationFragmentDirections.actionVerificationFragmentToLoginFragment());
-        });
-        binding.buttonForceLogin.setOnClickListener(v -> {
+
+        binding.cardFingerprint.setOnClickListener(v -> {
             Toast.makeText(requireContext(), "This test using hardcoded dummy data", Toast.LENGTH_LONG).show();
             NavHostFragment.findNavController(VerificationFragment.this).navigate(VerificationFragmentDirections.actionVerificationFragmentToSelectAccountFragment());
         });
+
+        if (binding.cardFingerprint.getVisibility() == View.VISIBLE) {
+            fingerprintHandler.startScanning();
+        }
 
     }
 
     private void initObserver() {
 
     }
-
-    private void createCameraManager() {
-        cameraManager = new CameraManager(requireContext(), binding.preview, this, binding.graphicOverlayFinder);
-    }
-
     private void initSelection() {
         binding.buttonFacial.setOnClickListener(v -> {
             TransitionManager.beginDelayedTransition(binding.getRoot());
 
             binding.layoutFacial.setVisibility(View.VISIBLE);
             binding.layoutFingerprint.setVisibility(View.GONE);
+            fingerprintHandler.stopScanning();
         });
 
         binding.buttonFingerprint.setOnClickListener(v -> {
                     TransitionManager.beginDelayedTransition(binding.getRoot());
                     binding.layoutFacial.setVisibility(View.GONE);
                     binding.layoutFingerprint.setVisibility(View.VISIBLE);
+                    fingerprintHandler.startScanning();
                 }
 
         );
-
-    }
-
-    private void createFingerprint() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            executor = ContextCompat.getMainExecutor(requireContext());
-            biometricPrompt = new BiometricPrompt(requireActivity(), executor, new BiometricPrompt.AuthenticationCallback() {
-                @Override
-                public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                    super.onAuthenticationError(errorCode, errString);
-                    Toast.makeText(requireContext(), "Authentication error: " + errString, Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                    super.onAuthenticationSucceeded(result);
-                    Toast.makeText(requireContext(), "Authentication succeeded!", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onAuthenticationFailed() {
-                    super.onAuthenticationFailed();
-                    Toast.makeText(requireContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
-                }
-            });
-            promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("Verification").setSubtitle("Verify your BVN using fingerprint").setNegativeButtonText("Use Face recognition").build();
-        }
-
 
     }
 }

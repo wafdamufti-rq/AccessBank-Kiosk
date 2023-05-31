@@ -35,13 +35,7 @@ public class SelectOptionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonBack.setOnClickListener(v -> NavHostFragment.findNavController(SelectOptionFragment.this).popBackStack());
-        binding.buttonCancel.setOnClickListener(v -> {
-            viewModel.clearState();
-            NavHostFragment.findNavController(SelectOptionFragment.this).navigate(SelectOptionFragmentDirections.actionSelectOptionFragmentToLoginFragment());
-        });
-
-        binding.button2.setOnClickListener(v -> NavHostFragment.findNavController(SelectOptionFragment.this).navigate(SelectOptionFragmentDirections.actionSelectOptionFragmentToUpdateInformationFragment().setUpdateType(UpdateType.PHONE)));
-        binding.button3.setOnClickListener(v -> NavHostFragment.findNavController(SelectOptionFragment.this).navigate(SelectOptionFragmentDirections.actionSelectOptionFragmentToUpdateInformationFragment().setUpdateType(UpdateType.EMAIL)));
+        binding.buttonUpdatePhone.setOnClickListener(v -> NavHostFragment.findNavController(SelectOptionFragment.this).navigate(SelectOptionFragmentDirections.actionSelectOptionFragmentToUpdateInformationFragment().setUpdateType(UpdateType.PHONE)));
+        binding.buttonUpdateEmail.setOnClickListener(v -> NavHostFragment.findNavController(SelectOptionFragment.this).navigate(SelectOptionFragmentDirections.actionSelectOptionFragmentToUpdateInformationFragment().setUpdateType(UpdateType.EMAIL)));
     }
 }

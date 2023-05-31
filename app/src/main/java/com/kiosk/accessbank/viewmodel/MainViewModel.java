@@ -3,11 +3,10 @@ package com.kiosk.accessbank.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
-import androidx.navigation.Navigation;
+import androidx.navigation.NavDestination;
 
-import com.google.android.gms.common.api.Api;
+import com.kiosk.accessbank.R;
 import com.kiosk.accessbank.source.api.ApiResponse;
-import com.kiosk.accessbank.source.api.ServiceService;
 import com.kiosk.accessbank.source.model.Account;
 import com.kiosk.accessbank.source.model.Service;
 import com.kiosk.accessbank.source.model.User;
@@ -81,6 +80,7 @@ public class MainViewModel extends BaseViewModel {
 
 
     public void login(long authNumber){
+        _loginTrigger.postValue(false);
         userRepository.login(authNumber).subscribe(new SingleObserver<>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
@@ -105,7 +105,7 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void getAccount(){
-        userRepository.getAllAccounts(loggedUser.getAuthNumber()).subscribe(new SingleObserver<ApiResponse<ArrayList<Account>>>() {
+        userRepository.getAllAccounts(loggedUser.getAuthNumber()).subscribe(new SingleObserver<>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
                 disposable.add(d);
@@ -169,6 +169,7 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void submitUpdate(String toString) {
+        _updateInformationSubmitTrigger.postValue(false);
        _submittedLiveData.postValue(true);
     }
 
@@ -192,5 +193,26 @@ public class MainViewModel extends BaseViewModel {
             }
         });
     }
-}
 
+    //re update to false after triggering
+    private MutableLiveData<Boolean> _updateInformationSubmitTrigger = new MutableLiveData<>(false);
+    public LiveData<Boolean> updateInformationSubmitTrigger = _updateInformationSubmitTrigger;
+
+    //re update to false after triggering
+    private MutableLiveData<Boolean> _loginTrigger = new MutableLiveData<>(false);
+    public  LiveData<Boolean> loginTrigger = _loginTrigger;
+
+    public void next(NavDestination currentDestination) {
+        if (currentDestination.getId() == R.id.loginFragment){
+            _loginTrigger.postValue(true);
+        }
+    }
+
+
+
+    public void submit(NavDestination currentDestination) {
+        if (currentDestination.getId() == R.id.updateInformationFragment){
+            _updateInformationSubmitTrigger.postValue(true);
+        }
+    }
+}

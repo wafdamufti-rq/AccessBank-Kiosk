@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:background="@drawable/background_content"
     android:theme="@style/Theme.AccessBank"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -10,131 +11,139 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="80dp"
+        android:textSize="80sp"
+        android:textFontWeight="400"
+        android:textColor="@color/white"
         android:text="@string/enter_your_new_type"
         android:textAppearance="?textAppearanceHeadline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TableLayout
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_margin="20dp"
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:id="@+id/input_form"
+        android:layout_width="match_parent"
+        app:layout_constraintVertical_bias="0.1"
+        android:layout_marginTop="80dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxBackgroundColor="@color/white"
+        android:paddingHorizontal="50dp"
+        app:shapeAppearance="@style/shapeAppearanceRoundedMedium"
+        app:hintEnabled="false"
+        android:layout_height="150dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:textColorHint="@color/grey"
+            android:textAppearance="?textAppearanceHeadline2"
+            android:clickable="false"
+            android:inputType="text"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="80dp"
+        android:layout_marginHorizontal="50dp"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintTop_toBottomOf="@id/input_form"
         android:gravity="center_horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title">
-
-        <TableRow android:layout_gravity="center">
-
-            <TextView
-                android:padding="10dp"
-                android:text="@string/date"
-                android:textStyle="bold"
-                android:textAppearance="?textAppearanceBody1" />
-
-            <TextView
-                android:id="@+id/text_date"
-                android:padding="3dp"
-                tools:text="Date"
-                android:textAppearance="?textAppearanceBody1" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:padding="10dp"
-                android:textStyle="bold"
-
-                android:text="@string/account_no"
-                android:textAppearance="?textAppearanceBody1" />
-
-            <TextView
-                android:id="@+id/text_account_no"
-                android:padding="3dp"
-                tools:text="Account No"
-                android:textAppearance="?textAppearanceBody1" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:padding="10dp"
-                android:textStyle="bold"
-
-                android:text="@string/phone_number"
-                android:textAppearance="?textAppearanceBody1" />
-
-            <TextView
-                android:id="@+id/text_phone"
-                android:padding="3dp"
-                tools:text="31231231"
-                android:textAppearance="?textAppearanceBody1" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:padding="10dp"
-                android:textStyle="bold"
-
-                android:text="@string/email"
-                android:textAppearance="?textAppearanceBody1" />
-
-            <TextView
-                android:id="@+id/text_email"
-                android:padding="3dp"
-                tools:text="Hahaha@gmail.com"
-                android:textAppearance="?textAppearanceBody1" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:id="@+id/label_new_s"
-                android:padding="10dp"
-                android:textStyle="bold"
-                android:text="@string/new_s"
-                android:textAppearance="?textAppearanceBody1" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
-        </TableRow>
-    </TableLayout>
-
-    <Button
-        android:id="@+id/button_submit"
-        style="@style/MyTheme.Button.Filled"
-        android:text="@string/submit"
-        app:layout_constraintEnd_toStartOf="@id/button_cancel"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <TableLayout
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
 
-    <Button
-        android:id="@+id/button_cancel"
-        style="@style/MyTheme.Button.Filled"
-        app:layout_constraintStart_toEndOf="@id/button_submit"
-        android:text="@string/cancel"
-        android:layout_marginBottom="50dp"
-        android:backgroundTint="@color/red"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toBottomOf="@id/title">
+
+            <TableRow android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:padding="20dp"
+                    android:text="@string/date"
+                    android:textFontWeight="700"
+                    android:textSize="35sp"
+                    android:textColor="@color/grey"/>
+
+                <TextView
+                    android:id="@+id/text_date"
+                    android:padding="20dp"
+                    android:textSize="35sp"
+                    android:textFontWeight="400"
+                    android:textColor="@color/grey"
+                    tools:text="Date" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="20dp"
+                    android:textFontWeight="700"
+                    android:textStyle="bold"
+                    android:textSize="35sp"
+                    android:textColor="@color/grey"
+                    android:text="@string/account_no" />
+
+                <TextView
+                    android:id="@+id/text_account_no"
+                    android:padding="20dp"
+                    android:textSize="35sp"
+                    android:textFontWeight="400"
+                    android:textColor="@color/grey"
+                    tools:text="Account No" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="20dp"
+                    android:textFontWeight="700"
+                    android:textSize="35sp"
+                    android:textColor="@color/grey"
+
+                    android:text="@string/phone_number" />
+
+                <TextView
+                    android:id="@+id/text_phone"
+                    android:padding="20dp"
+                    android:textSize="35sp"
+                    android:textFontWeight="400"
+                    android:textColor="@color/grey"
+                    tools:text="31231231" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="20dp"
+                    android:textFontWeight="700"
+                    android:textSize="35sp"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+
+                    android:text="@string/email"
+                    android:textAppearance="?textAppearanceBody1" />
+
+                <TextView
+                    android:id="@+id/text_email"
+                    android:padding="20dp"
+                    android:textSize="35sp"
+                    android:textFontWeight="400"
+                    android:textColor="@color/grey"
+                    tools:text="Hahaha@gmail.com"
+                    android:textAppearance="?textAppearanceBody1" />
+            </TableRow>
+        </TableLayout>
+    </com.google.android.material.card.MaterialCardView>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

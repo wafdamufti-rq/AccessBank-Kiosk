@@ -12,48 +12,59 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.kiosk.accessbank.R;
+import com.zkteco.biometric.FingerprintCaptureListener;
+import com.zkteco.biometric.FingerprintSensor;
 
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
     private Context context;
 
+    private FingerprintSensor fingerprintSensor;
     // Constructor
     public FingerprintHandler(Context mContext) {
         context = mContext;
+//        fingerprintSensor = new FingerprintSensor();
     }
 
-    // Fingerprint authentication starts here..
-    public void Authentication(FingerprintManager manager, FingerprintManager.CryptoObject cryptoObject) {
-        CancellationSignal cancellationSignal = new CancellationSignal();
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        manager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
+
+    public void listener(FingerprintCaptureListener listener){
+        if (fingerprintSensor ==null) return;
+
+        fingerprintSensor.setFingerprintCaptureListener(listener);
     }
 
-    // On authentication failed
-    @Override
-    public void onAuthenticationFailed() {
-        this.update("Authentication Failed!!!", false);
+
+
+    public void openDevice(){
+        if (fingerprintSensor ==null) return;
+        fingerprintSensor.openDevice(0);
     }
 
-    // On successful authentication
-    @Override
-    public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
-        this.update("Successfully Authenticated...", true);
+    public void closeDevice(){
+        if (fingerprintSensor ==null) return;
+        fingerprintSensor.closeDevice();
+
+    }
+    public boolean isDeviceOnline(){
+        if (fingerprintSensor ==null) return false ;
+        return fingerprintSensor.getDeviceCount()  > 0;
     }
 
-    // This method is used to update the text message
-    // depending on the authentication result
-    public void update(String e, Boolean success){
-//        TextView textView = (TextView) ((Activity)context).findViewById(R.id.textMsg);
-//        textView.setText(e);
-//        if(success){
-//            textView.setTextColor(ContextCompat.getColor(context,R.color.black));
-//        }
+    public void startScanning(){
+        if (fingerprintSensor ==null) return;
+        fingerprintSensor.startCapture();
     }
 
-    public void startAuth(FingerprintManager fingerprintManager, FingerprintManager.CryptoObject cryptoObject) {
-        Authentication(fingerprintManager,cryptoObject);
+    public void stopScanning(){
+        if (fingerprintSensor ==null) return;
+        fingerprintSensor.stopCapture();
     }
+
+    public void acquireFingerprint(){
+        if (fingerprintSensor ==null) return;
+        fingerprintSensor.destroy();
+    }
+
+
+
 }

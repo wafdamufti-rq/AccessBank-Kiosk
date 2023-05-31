@@ -9,4 +9,10 @@
     <string name="phone_number">Phone number</string>
     <string name="account_no">Account No</string>
     <string name="date">Date</string>
+    <string name="back">Back</string>
+    <string name="place_you_fingerprint">Place you fingerprint</string>
+    <string name="facial_recognition_all_cap">FACIAL RECOGNITION</string>
+    <string name="label_update_email">Email Update</string>
+    <string name="label_update_phone">Phone Number Update</string>
+    <string name="next">Next</string>
 </resources>

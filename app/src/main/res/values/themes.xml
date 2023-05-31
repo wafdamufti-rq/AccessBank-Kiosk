@@ -2,10 +2,10 @@
     <!-- Base application theme. -->
     <style name="Theme.AccessBank" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimary">@color/orange_background</item>
         <item name="colorPrimaryVariant">@color/grey</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="backgroundColor">#A4C519</item>
+        <item name="backgroundColor">@color/green_dark</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>

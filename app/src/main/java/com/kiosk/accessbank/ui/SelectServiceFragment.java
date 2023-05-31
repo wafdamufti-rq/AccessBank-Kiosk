@@ -38,14 +38,12 @@ public class SelectServiceFragment extends Fragment implements OnServiceListener
         super.onViewCreated(view, savedInstanceState);
         adapter = new ButtonServiceAdapter(this);
         binding.recyclerview.setAdapter(adapter);
-        binding.buttonBack.setOnClickListener(v -> NavHostFragment.findNavController(SelectServiceFragment.this).popBackStack());
-        binding.buttonCancel.setOnClickListener(v -> {
-            viewModel.clearState();
-            NavHostFragment.findNavController(SelectServiceFragment.this).navigate(SelectServiceFragmentDirections.actionSelectServiceFragmentToLoginFragment());
-        });
-
         viewModel.loadServices();
 
+        initObserver();
+    }
+
+    private void initObserver() {
         viewModel.servicesLiveData.observe(getViewLifecycleOwner(), arrayListApiResponse -> {
             if (arrayListApiResponse != null) {
                 adapter.setData(arrayListApiResponse.getData());

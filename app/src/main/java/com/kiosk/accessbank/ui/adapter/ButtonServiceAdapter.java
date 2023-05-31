@@ -58,13 +58,12 @@ public class ButtonServiceAdapter extends RecyclerView.Adapter<ButtonServiceAdap
         }
 
         public void bind(Service data) {
-            binding.button.setText(data.getName());
-            binding.button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onClick(data);
-                }
-            });
+            binding.description.setText(data.getName());
+            binding.textCount.setVisibility(View.GONE);
+
+            binding.imageIcon.setImageResource(data.getIcon());
+
+            binding.cardButton.setOnClickListener(v -> listener.onClick(data));
         }
     }
 

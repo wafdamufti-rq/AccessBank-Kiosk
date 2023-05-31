@@ -4,8 +4,9 @@
 
     <style name="MyTheme.Button.Outline" parent="@style/Widget.Material3.Button.OutlinedButton">
         <item name="strokeColor">@color/grey</item>
+        <item name="shapeAppearance">@style/shapeAppearanceRoundedMedium</item>
         <item name="backgroundTint">@color/white</item>
-        <item name="android:textAppearance">?textAppearanceSubtitle1</item>
+        <item name="android:textAppearance">?textAppearanceHeadline4</item>
         <item name="android:textColor">@color/grey</item>
     </style>
 
@@ -13,5 +14,12 @@
         <item name="strokeColor">@color/grey</item>
         <item name="android:textAppearance">?textAppearanceSubtitle1</item>
         <item name="backgroundTint">@color/teal_200</item>
+    </style>
+
+    <style name="MyTheme.Progress.Horizontal" parent="Widget.MaterialComponents.LinearProgressIndicator">
+        <item name="trackThickness">15dp</item>
+        <item name="indicatorColor">@color/grey</item>
+        <item name="trackColor">@color/white</item>
+        <item name="shapeAppearance">?shapeAppearanceSmallComponent</item>
     </style>
 </resources>

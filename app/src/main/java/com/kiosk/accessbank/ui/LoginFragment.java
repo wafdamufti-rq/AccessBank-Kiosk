@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavHostController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -53,6 +54,16 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        viewModel.loginTrigger.observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean != null && aBoolean) {
+                if (binding.textInputAccountNumber.getEditText().getText().toString().length() > 0) {
+                    viewModel.login(Long.parseLong(Objects.requireNonNull(binding.textInputAccountNumber.getEditText()).getText().toString()));
+                } else {
+                    binding.textInputAccountNumber.setError("Please fill your account number");
+                }
+            }
+        });
+
     }
 
 
@@ -83,15 +94,7 @@ public class LoginFragment extends Fragment {
         binding.inputNumberLayout.buttonEight.setOnClickListener(inputTrigger("8"));
         binding.inputNumberLayout.buttonNine.setOnClickListener(inputTrigger("9"));
         binding.inputNumberLayout.buttonZero.setOnClickListener(inputTrigger("0"));
-        binding.inputNumberLayout.buttonRemove.setOnClickListener(inputTrigger("back"));
-
-        binding.inputNumberLayout.buttonNext.setOnClickListener(v -> {
-            if (binding.textInputAccountNumber.getEditText().getText().toString().length() > 0){
-                viewModel.login(Long.parseLong(Objects.requireNonNull(binding.textInputAccountNumber.getEditText()).getText().toString()));
-            }else{
-                binding.textInputAccountNumber.setError("Please fill your account number");
-            }
-        });
+        binding.inputNumberLayout.buttonBack.setOnClickListener(inputTrigger("back"));
 
         binding.textInputAccountNumber.getEditText().addTextChangedListener(new TextWatcher() {
             @Override

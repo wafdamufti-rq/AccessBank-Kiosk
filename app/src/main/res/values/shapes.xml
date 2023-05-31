@@ -2,6 +2,9 @@
 <resources>
 
     <style name="shapeAppearanceRoundedMedium" parent="@style/ShapeAppearance.Material3.Corner.Medium">
+    </style>
+
+    <style name="shapeAppearanceRoundedSmall" parent="@style/ShapeAppearance.Material3.Corner.Small">
 
     </style>
 </resources>

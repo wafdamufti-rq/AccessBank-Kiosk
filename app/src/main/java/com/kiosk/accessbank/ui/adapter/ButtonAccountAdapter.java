@@ -37,7 +37,7 @@ public class ButtonAccountAdapter extends RecyclerView.Adapter<ButtonAccountAdap
 
     @Override
     public void onBindViewHolder(@NonNull ButtonAccountViewHolder holder, int position) {
-        holder.bind(data.get(position));
+        holder.bind(data.get(position),position+1);
     }
 
     @Override
@@ -54,9 +54,10 @@ public class ButtonAccountAdapter extends RecyclerView.Adapter<ButtonAccountAdap
             this.binding = binding;
         }
 
-        public void bind(Account data){
-            binding.button.setText(data.getName());
-            binding.button.setOnClickListener(v -> listener.onClick(data));
+        public void bind(Account data, int i){
+            binding.description.setText(data.getName());
+            binding.cardButton.setOnClickListener(v -> listener.onClick(data));
+            binding.textCount.setText(String.valueOf(i));
         }
     }
 

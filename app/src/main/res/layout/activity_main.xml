@@ -11,26 +11,41 @@
     <ImageView
         android:id="@+id/title"
         android:textAppearance="@style/TextAppearance.Material3.DisplayLarge"
-        android:layout_width="250dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="10dp"
         android:adjustViewBounds="true"
         android:src="@drawable/access_bank_plc_top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_percent="0.15"
+        android:layout_height="0dp"/>
+    <Button
+        android:id="@+id/button_kiosk_mode"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:text="Enable kiosk mode"
+        android:layout_width="wrap_content"
+        android:textColor="@color/grey"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp"
         android:layout_height="wrap_content"/>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="20dp"
-        app:cardBackgroundColor="#A4C519"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_section"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title">
+        <ImageView
+            android:src="@drawable/background_content"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
@@ -38,11 +53,77 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
-
             app:navGraph="@navigation/nav_main"
             tools:layout="@layout/fragment_login" />
 
     </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_section"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        app:layout_constraintHeight_percent="0.15"
+        android:layout_height="0dp">
+        <Button
+            android:id="@+id/button_back"
+            style="@style/MyTheme.Button.Outline"
+            android:text="@string/back"
+            android:textColor="@color/green_dark"
+            app:strokeColor="@color/green_dark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="50dp"
+            app:strokeWidth="3dp"
+
+            android:layout_width="312dp"
+            android:layout_height="124dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_submit"
+            style="@style/MyTheme.Button.Outline"
+            android:text="@string/submit"
+            android:textColor="@color/green_dark"
+            app:strokeColor="@color/green_dark"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="50dp"
+            app:strokeWidth="3dp"
+
+            android:layout_width="312dp"
+            android:layout_height="124dp"/>
+
+        <Button
+            android:id="@+id/button_cancel"
+            style="@style/MyTheme.Button.Outline"
+            android:text="@string/cancel"
+            android:textColor="@color/orange_background"
+            app:strokeColor="@color/orange_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="50dp"
+            app:strokeWidth="3dp"
+            android:layout_weight="3"
+            android:layout_width="312dp"
+            android:layout_height="124dp"/>
+        <Button
+            android:id="@+id/button_next"
+            style="@style/MyTheme.Button.Outline"
+            android:text="@string/next"
+            android:textColor="@color/orange_background"
+            app:strokeColor="@color/orange_background"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="50dp"
+            app:strokeWidth="3dp"
+            android:layout_width="312dp"
+            android:layout_height="124dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
