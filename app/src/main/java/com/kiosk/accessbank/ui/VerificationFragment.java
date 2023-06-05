@@ -16,17 +16,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.kiosk.accessbank.databinding.FragmentVerificationBinding;
+import com.kiosk.accessbank.facedetection.FaceRecognitionHandler;
 import com.kiosk.accessbank.fingerprint.FingerprintHandler;
+import com.kiosk.accessbank.util.ToastUtils;
 import com.kiosk.accessbank.viewmodel.MainViewModel;
-import com.zkteco.biometric.FingerprintCaptureListener;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import dagger.hilt.android.WithFragmentBindings;
 
 @AndroidEntryPoint
-public class VerificationFragment extends Fragment {
+public class VerificationFragment extends Fragment implements FingerprintHandler.FingerprintListener {
 
     private static final String FINGERPRINT_TAG = "fingerprint";
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
@@ -39,9 +39,12 @@ public class VerificationFragment extends Fragment {
     }
 
     @Inject
-     FingerprintHandler fingerprintHandler;
+    FingerprintHandler fingerprintHandler;
     private FragmentVerificationBinding binding;
     private MainViewModel viewModel;
+    
+    
+    private FaceRecognitionHandler faceRecognitionHandler;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +55,7 @@ public class VerificationFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        fingerprintHandler.stopScanning();
-        fingerprintHandler.closeDevice();
-
+        fingerprintHandler.onBnStop();
     }
 
     @Nullable
@@ -68,28 +69,17 @@ public class VerificationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (fingerprintHandler == null ) fingerprintHandler = new FingerprintHandler(this.getContext());
-        fingerprintHandler.openDevice();
-        fingerprintHandler.listener(new FingerprintCaptureListener() {
-            @Override
-            public void captureOK(byte[] bytes) {
-                fingerprintHandler.stopScanning();
-                fingerprintHandler.closeDevice();
+        if (fingerprintHandler == null)
+            fingerprintHandler = new FingerprintHandler(this.getContext());
 
-                Toast.makeText(requireContext(), "This test using hardcoded dummy data", Toast.LENGTH_LONG).show();
-                NavHostFragment.findNavController(VerificationFragment.this).navigate(VerificationFragmentDirections.actionVerificationFragmentToSelectAccountFragment());
-            }
+        if (faceRecognitionHandler == null){
+            faceRecognitionHandler = new FaceRecognitionHandler(requireContext(),binding.preview);
+        }
 
-            @Override
-            public void captureError(int i) {
+        fingerprintHandler.addListener(this);
 
-            }
 
-            @Override
-            public void extractOK(byte[] bytes) {
-
-            }
-        });
+        fingerprintHandler.onBnStart();
         initSelection();
         initObserver();
 
@@ -97,34 +87,75 @@ public class VerificationFragment extends Fragment {
         binding.cardFingerprint.setOnClickListener(v -> {
             Toast.makeText(requireContext(), "This test using hardcoded dummy data", Toast.LENGTH_LONG).show();
             NavHostFragment.findNavController(VerificationFragment.this).navigate(VerificationFragmentDirections.actionVerificationFragmentToSelectAccountFragment());
+            fingerprintHandler.onBnStart();
         });
 
         if (binding.cardFingerprint.getVisibility() == View.VISIBLE) {
-            fingerprintHandler.startScanning();
+            fingerprintHandler.onBnStop();
         }
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        fingerprintHandler.onBnStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        faceRecognitionHandler.bindCamera(getViewLifecycleOwner());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        faceRecognitionHandler.unBindCamera();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        faceRecognitionHandler.unBindCamera();
     }
 
     private void initObserver() {
 
     }
+
     private void initSelection() {
         binding.buttonFacial.setOnClickListener(v -> {
             TransitionManager.beginDelayedTransition(binding.getRoot());
 
             binding.layoutFacial.setVisibility(View.VISIBLE);
             binding.layoutFingerprint.setVisibility(View.GONE);
-            fingerprintHandler.stopScanning();
+            fingerprintHandler.onBnStop();
+            faceRecognitionHandler.bindCamera(getViewLifecycleOwner());
         });
 
         binding.buttonFingerprint.setOnClickListener(v -> {
                     TransitionManager.beginDelayedTransition(binding.getRoot());
                     binding.layoutFacial.setVisibility(View.GONE);
                     binding.layoutFingerprint.setVisibility(View.VISIBLE);
-                    fingerprintHandler.startScanning();
+                    fingerprintHandler.onBnStart();
+                    faceRecognitionHandler.unBindCamera();
                 }
 
         );
+
+    }
+
+    @Override
+    public void onSuccess(byte[] value, String result) {
+//        ToastUtils.show(requireContext(),result);
+        Toast.makeText(requireContext(), "This test using hardcoded dummy data", Toast.LENGTH_LONG).show();
+        NavHostFragment.findNavController(VerificationFragment.this).navigate(VerificationFragmentDirections.actionVerificationFragmentToSelectAccountFragment());
+    }
+
+    @Override
+    public void onFailed(String message) {
+        ToastUtils.show(requireContext(),message);
 
     }
 }

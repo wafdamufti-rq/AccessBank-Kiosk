@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top_title"
         android:text="@string/enter_your_new_type"
+        android:textAlignment="center"
         android:textAppearance="?textAppearanceHeadline6"
         android:textColor="@color/white"
         android:textFontWeight="700"

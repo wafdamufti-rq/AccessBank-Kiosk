@@ -3,6 +3,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.dagger.hilt.android'
     id 'androidx.navigation.safeargs'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -11,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.kiosk.accessbank"
-        minSdk 24
+        minSdk 28
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -72,6 +73,14 @@ dependencies {
     implementation "androidx.biometric:biometric:1.1.0"
     //API
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:32.1.0')
+
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     //test
     testImplementation 'junit:junit:4.13.2'

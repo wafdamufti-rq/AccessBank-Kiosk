@@ -68,10 +68,6 @@ public class MainViewModel extends BaseViewModel {
     private final MutableLiveData<Boolean> _submittedLiveData = new MutableLiveData<>();
 
     public LiveData<Boolean> submittedLiveData = _submittedLiveData;
-
-    private final MutableLiveData<Boolean> _delayLiveData = new MutableLiveData<>();
-
-    public LiveData<Boolean> delayLiveData = _delayLiveData;
     // clear those after destroyed
     private User loggedUser = null;
     private Account selectedAccount = null;
@@ -169,27 +165,6 @@ public class MainViewModel extends BaseViewModel {
        _submittedLiveData.postValue(true);
     }
 
-    public void clearEverything() {
-
-        Single.timer(3, TimeUnit.SECONDS).subscribe(new SingleObserver<Long>() {
-            @Override
-            public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-                disposable.add(d);
-            }
-
-            @Override
-            public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull Long aLong) {
-                if (loggedUser != null)
-                    _delayLiveData.postValue(true);
-
-            }
-
-            @Override
-            public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-
-            }
-        });
-    }
 
     //re update to false after triggering
     private MutableLiveData<Boolean> _updateInformationSubmitTrigger = new MutableLiveData<>(false);

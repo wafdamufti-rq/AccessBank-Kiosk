@@ -4,7 +4,9 @@ import static android.view.View.GONE;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.kiosk.accessbank.databinding.ActivityMainBinding;
+import com.kiosk.accessbank.fingerprint.FingerprintHandler;
 import com.kiosk.accessbank.util.KioskManager;
 import com.kiosk.accessbank.viewmodel.MainViewModel;
 
@@ -36,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST_CODE = 10;
     @Inject
     public KioskManager kioskManager;
+
+    @Inject
+            public FingerprintHandler fingerprintHandler;
+
     NavController navController;
     private ActivityMainBinding binding;
     private MainViewModel viewModel;
@@ -45,11 +52,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        fingerprintHandler.addListener(new FingerprintHandler.FingerprintListener() {
+            @Override
+            public void onSuccess(byte[] value, String result) {
 
+            }
+
+            @Override
+            public void onFailed(String message) {
+                Log.d("fingerprint",message);
+            }
+        });
+        fingerprintHandler.onBnIdentify();
+        setContentView(binding.getRoot());
         initNavController();
         initListener();
         initView();
+        if (!allPermissionsGranted()){
+            requestPermission();
+        }
         kioskManager.setUpAdmin(this);
     }
 
@@ -151,6 +172,8 @@ public class MainActivity extends AppCompatActivity {
             binding.buttonSubmit.setVisibility(GONE);
             binding.buttonHome.setVisibility(View.VISIBLE);
         }
+
+
     }
 
     private Boolean allPermissionsGranted() {
@@ -174,7 +197,8 @@ public class MainActivity extends AppCompatActivity {
     private void validatePermission(int requestCode) {
         if (requestCode == CAMERA_REQUEST_CODE) {
             if (allPermissionsGranted()) {
-
+                Toast.makeText(this, "Camera permission is granted", Toast.LENGTH_SHORT)
+                        .show();
             } else {
                 Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT)
                         .show();
