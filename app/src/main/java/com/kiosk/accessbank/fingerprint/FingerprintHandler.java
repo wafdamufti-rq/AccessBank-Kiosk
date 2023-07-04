@@ -1,397 +1,249 @@
 package com.kiosk.accessbank.fingerprint;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.hardware.fingerprint.FingerprintManager;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.kiosk.accessbank.fingerprint.ZKUSBManager.ZKUSBManager;
-import com.kiosk.accessbank.fingerprint.ZKUSBManager.ZKUSBManagerListener;
-import com.kiosk.accessbank.util.PermissionUtils;
-import com.zkteco.android.biometric.FingerprintExceptionListener;
 import com.zkteco.android.biometric.core.device.ParameterHelper;
 import com.zkteco.android.biometric.core.device.TransportType;
 import com.zkteco.android.biometric.core.utils.LogHelper;
-import com.zkteco.android.biometric.core.utils.ToolUtils;
 import com.zkteco.android.biometric.module.fingerprintreader.FingerprintCaptureListener;
 import com.zkteco.android.biometric.module.fingerprintreader.FingerprintSensor;
 import com.zkteco.android.biometric.module.fingerprintreader.FingprintFactory;
 import com.zkteco.android.biometric.module.fingerprintreader.ZKFingerService;
 import com.zkteco.android.biometric.module.fingerprintreader.exception.FingerprintException;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
+public class FingerprintHandler {
 
+    private static final String TAG = "fingerprint_handler";
     private final Context context;
-    private static final int ZKTECO_VID =   0x1b55;
-    private static final int LIVE20R_PID =   0x0120;
-    private static final int LIVE10R_PID =   0x0124;
-    private static final String TAG = "MainActivity";
-    private final int REQUEST_PERMISSION_CODE = 9;
-    private ZKUSBManager zkusbManager = null;
+
+    private boolean bstart = false;
+    private boolean isRegister = false;
+    private int uid = 1;
+    private byte[][] regtemparray = new byte[3][2048];  //register template buffer array
+    private int enrollidx = 0;
+    private byte[] lastRegTemp = new byte[2048];
+
     private FingerprintSensor fingerprintSensor = null;
 
-    private final int usb_vid = ZKTECO_VID;
-    private int usb_pid = 0;
-    private boolean bStarted = false;
-    private final int deviceIndex = 0;
-    private boolean isReseted = false;
-    private String strUid = null;
-    private final static int ENROLL_COUNT   =   3;
-    private int enroll_index = 0;
-    private final byte[][] regtemparray = new byte[3][2048];  //register template buffer array
-    private boolean bRegister = false;
-    // Constructor
-    public FingerprintHandler(Context mContext) {
+    private static final int VID = 6997;
+    private static final int PID = 288;
+
+    public FingerprintHandler(Context mContext,FingerprintListener listener ) {
         context = mContext;
-        zkusbManager = new ZKUSBManager(mContext, zkusbManagerListener);
-    }
-
-    private FingerprintListener listener = new FingerprintListener() {
-        @Override
-        public void onSuccess(byte[] value, String result) {
-
-        }
-
-        @Override
-        public void onFailed(String message) {
-
-        }
-    };
-    public FingerprintHandler addListener(FingerprintListener listener){
         this.listener = listener;
-        return this;
-    }
-
-
-    void doRegister(byte[] template)
-    {
-        byte[] bufids = new byte[256];
-        int ret = ZKFingerService.identify(template, bufids, 70, 1);
-        if (ret > 0)
-        {
-            String strRes[] = new String(bufids).split("\t");
-            listener.onFailed("the finger already enroll by " + strRes[0] + ",cancel enroll");
-            setResult("the finger already enroll by " + strRes[0] + ",cancel enroll");
-            bRegister = false;
-            enroll_index = 0;
-            return;
-        }
-        if (enroll_index > 0 && (ret = ZKFingerService.verify(regtemparray[enroll_index-1], template)) <= 0)
-        {
-            listener.onFailed("please press the same finger 3 times for the enrollment, cancel enroll, socre=\" + ret");
-            setResult("please press the same finger 3 times for the enrollment, cancel enroll, socre=" + ret);
-            bRegister = false;
-            enroll_index = 0;
-            return;
-        }
-        System.arraycopy(template, 0, regtemparray[enroll_index], 0, 2048);
-        enroll_index++;
-        if (enroll_index == ENROLL_COUNT) {
-            bRegister = false;
-            enroll_index = 0;
-            byte[] regTemp = new byte[2048];
-            if (0 < (ret = ZKFingerService.merge(regtemparray[0], regtemparray[1], regtemparray[2], regTemp))) {
-                int retVal = 0;
-                retVal = ZKFingerService.save(regTemp, strUid);
-                if (0 == retVal)
-                {
-                    String strFeature = Base64.encodeToString(regTemp, 0, ret, Base64.NO_WRAP);
-                    setResult("enroll succ");
-                }
-                else
-                {
-                    setResult("enroll fail, add template fail, ret=" + retVal);
-                }
-            } else {
-                setResult("enroll fail");
-            }
-            bRegister = false;
-        } else {
-            setResult("You need to press the " + (3 - enroll_index) + " times fingerprint");
-        }
-    }
-
-    void doIdentify(byte[] template)
-    {
-        byte[] bufids = new byte[256];
-        int ret = ZKFingerService.identify(template, bufids, 70, 1);
-        if (ret > 0) {
-            String strRes[] = new String(bufids).split("\t");
-            listener.onSuccess(bufids,"identify succ, userid:" + strRes[0].trim() + ", score:" + strRes[1].trim());
-            setResult("identify succ, userid:" + strRes[0].trim() + ", score:" + strRes[1].trim());
-        } else {
-            setResult("identify fail, ret=" + ret);
-        }
-    }
-
-
-    private FingerprintCaptureListener fingerprintCaptureListener = new FingerprintCaptureListener() {
-        @Override
-        public void captureOK(byte[] fpImage) {
-            final Bitmap bitmap = ToolUtils.renderCroppedGreyScaleBitmap(fpImage, fingerprintSensor.getImageWidth(), fingerprintSensor.getImageHeight());
-        }
-
-        @Override
-        public void captureError(FingerprintException e) {
-            listener.onFailed(e.getMessage());
-            // nothing to do
-        }
-
-        @Override
-        public void extractOK(byte[] fpTemplate) {
-            listener.onSuccess(fpTemplate, "fingerprint success scanning");
-//            if (bRegister)
-//            {
-//                doRegister(fpTemplate);
-//            }
-//            else
-//            {
-//                doIdentify(fpTemplate);
-//            }
-        }
-
-        @Override
-        public void extractError(int i) {
-            // nothing to do
-        }
-    };
-
-    private FingerprintExceptionListener fingerprintExceptionListener = () -> {
-        LogHelper.e("usb exception!!!");
-        if (!isReseted) {
-            try {
-                fingerprintSensor.openAndReboot(deviceIndex);
-            } catch (FingerprintException e) {
-                e.printStackTrace();
-            }
-            isReseted = true;
-        }
-    };
-
-    private ZKUSBManagerListener zkusbManagerListener = new ZKUSBManagerListener() {
-        @Override
-        public void onCheckPermission(int result) {
-            afterGetUsbPermission();
-        }
-
-        @Override
-        public void onUSBArrived(UsbDevice device) {
-            if (bStarted)
-            {
-                closeDevice();
-                tryGetUSBPermission();
-            }
-        }
-
-        @Override
-        public void onUSBRemoved(UsbDevice device) {
-            LogHelper.d("usb removed!");
-        }
-    };
-
-
-    private void checkStoragePermission(Activity activity) {
-        String[] permission = new String[]{
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        };
-        ArrayList<String> deniedPermissions = PermissionUtils.checkPermissions(activity, permission);
-        if (deniedPermissions.isEmpty()) {
-            //permission all granted
-            Log.i(TAG, "[checkStoragePermission]: all granted");
-        } else {
-            int size = deniedPermissions.size();
-            String[] deniedPermissionArray = deniedPermissions.toArray(new String[size]);
-            PermissionUtils.requestPermission(activity, deniedPermissionArray, REQUEST_PERMISSION_CODE);
-        }
-    }
-
-
-    private void createFingerprintSensor()
-    {
-        if (null != fingerprintSensor)
-        {
-            FingprintFactory.destroy(fingerprintSensor);
-            fingerprintSensor = null;
-        }
-        // Define output log level
-        LogHelper.setLevel(Log.VERBOSE);
-        LogHelper.setNDKLogLevel(Log.ASSERT);
+        LogHelper.setLevel(Log.ASSERT);
         // Start fingerprint sensor
-        Map deviceParams = new HashMap();
+        Map fingerprintParams = new HashMap();
         //set vid
-        deviceParams.put(ParameterHelper.PARAM_KEY_VID, usb_vid);
+        fingerprintParams.put(ParameterHelper.PARAM_KEY_VID, VID);
         //set pid
-        deviceParams.put(ParameterHelper.PARAM_KEY_PID, usb_pid);
-        fingerprintSensor = FingprintFactory.createFingerprintSensor(context, TransportType.USB, deviceParams);
+        fingerprintParams.put(ParameterHelper.PARAM_KEY_PID, PID);
+        fingerprintSensor = FingprintFactory.createFingerprintSensor(context, TransportType.USB, fingerprintParams);
     }
 
-    private boolean enumSensor()
-    {
-        UsbManager usbManager = (UsbManager)context.getSystemService(Context.USB_SERVICE);
-        for (UsbDevice device : usbManager.getDeviceList().values()) {
-            int device_vid = device.getVendorId();
-            int device_pid = device.getProductId();
-            if (device_vid == ZKTECO_VID && (device_pid == LIVE20R_PID || device_pid == LIVE10R_PID))
-            {
-                usb_pid = device_pid;
-                return true;
-            }
+    private FingerprintListener listener ;
+
+    public void saveBitmap(Bitmap bm) {
+        File f = new File("/sdcard/fingerprint", "test.bmp");
+        if (f.exists()) {
+            f.delete();
         }
-        return false;
-    }
-
-
-    private void tryGetUSBPermission() {
-        zkusbManager.initUSBPermission(usb_vid, usb_pid);
-    }
-
-    private void afterGetUsbPermission()
-    {
-        openDevice();
-    }
-
-    private void openDevice()
-    {
-        createFingerprintSensor();
-        bRegister = false;
-        enroll_index = 0;
-        isReseted = false;
+        FileOutputStream out = null;
         try {
-            //fingerprintSensor.setCaptureMode(1);
-            fingerprintSensor.open(deviceIndex);
-            //load all templates form db
-            {
-                // device parameter
-                LogHelper.d("sdk version" + fingerprintSensor.getSDK_Version());
-                LogHelper.d("firmware version" + fingerprintSensor.getFirmwareVersion());
-                LogHelper.d("serial:" + fingerprintSensor.getStrSerialNumber());
-                LogHelper.d("width=" + fingerprintSensor.getImageWidth() + ", height=" + fingerprintSensor.getImageHeight());
-            }
-            fingerprintSensor.setFingerprintCaptureListener(deviceIndex, fingerprintCaptureListener);
-            fingerprintSensor.SetFingerprintExceptionListener(fingerprintExceptionListener);
-            fingerprintSensor.startCapture(deviceIndex);
-            bStarted = true;
-//            textView.setText("connect success!");
-        } catch (FingerprintException e) {
+            out = new FileOutputStream(f);
+            bm.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+            out.close();
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-            // try to  reboot the sensor
-            try {
-                fingerprintSensor.openAndReboot(deviceIndex);
-            } catch (FingerprintException ex) {
-                ex.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void OnBnBegin()
+    {
+        try {
+            if (bstart) return;
+            fingerprintSensor.open(0);
+            final FingerprintCaptureListener captureListener = new FingerprintCaptureListener() {
+                @Override
+                public void captureOK(final byte[] fpImage) {
+                    final int width = fingerprintSensor.getImageWidth();
+                    final int height = fingerprintSensor.getImageHeight();
+                    ((Activity)context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onSuccess(fpImage,"success");
+
+                        }
+                    });
+//                    listener.captureOK(fpImage);
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if(null != fpImage)
+//                            {
+//                                ToolUtils.outputHexString(fpImage);
+//                                LogHelper.i("width=" + width + "\nHeight=" + height);
+//                                Bitmap bitmapFp = ToolUtils.renderCroppedGreyScaleBitmap(fpImage, width, height);
+//                                //saveBitmap(bitmapFp);
+//                                imageView.setImageBitmap(bitmapFp);
+//                            }
+//                            //Log.d(TAG,"FakeStatus:" + fingerprintSensor.getFakeStatus());
+//                        }
+//                    });
+                }
+                public void captureError(FingerprintException e) {
+                    final FingerprintException exp = e;
+                    ((Activity)context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onFailed(e.getMessage());
+
+                        }
+                    });
+
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            LogHelper.d("captureError  errno=" + exp.getErrorCode() +
+//                                    ",Internal error code: " + exp.getInternalErrorCode() + ",message=" + exp.getMessage());
+//                        }
+//                    });
+                }
+                public void extractError(final int err)
+                {
+                    ((Activity)context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onFailed("error code");
+
+                        }
+                    });
+
+//                    listener.onSuccess();
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Log.d(TAG,"extract fail, errorcode:" + err);
+//                        }
+//                    });
+                }
+
+                public void extractOK(final byte[] fpTemplate)
+                {
+                    final byte[] tmpBuffer = fpTemplate;
+                    if (isRegister) {
+                        byte[] bufids = new byte[256];
+                        int ret = ZKFingerService.identify(tmpBuffer, bufids, 55, 1);
+                        if (ret > 0)
+                        {
+                            String strRes[] = new String(bufids).split("\t");
+                            Log.d(TAG,"the finger already enroll by " + strRes[0] + ",cancel enroll");
+                            isRegister = false;
+                            enrollidx = 0;
+                            return;
+                        }
+
+                        if (enrollidx > 0 && ZKFingerService.verify(regtemparray[enrollidx-1], tmpBuffer) <= 0)
+                        {
+                            Log.d(TAG,"please press the same finger 3 times for the enrollment");
+                            return;
+                        }
+                        System.arraycopy(tmpBuffer, 0, regtemparray[enrollidx], 0, 2048);
+                        enrollidx++;
+                        if (enrollidx == 3) {
+                            byte[] regTemp = new byte[2048];
+                            if (0 < (ret = ZKFingerService.merge(regtemparray[0], regtemparray[1], regtemparray[2], regTemp))) {
+                                ZKFingerService.save(regTemp, "test" + uid++);
+
+                                System.arraycopy(regTemp, 0, lastRegTemp, 0, ret);
+                                //Base64 Template
+                                String strBase64 = Base64.encodeToString(regTemp, 0, ret, Base64.NO_WRAP);
+                                Log.d(TAG,"enroll succ, uid:" + uid + "count:" + ZKFingerService.count());
+                            } else {
+                                Log.d(TAG,"enroll fail");
+                            }
+                            isRegister = false;
+                        } else {
+                            Log.d(TAG,"You need to press the " + (3 - enrollidx) + "time fingerprint");
+                        }
+                    } else {
+                        byte[] bufids = new byte[256];
+                        int ret = ZKFingerService.identify(tmpBuffer, bufids, 70, 1);
+                        if (ret > 0) {
+                            String strRes[] = new String(bufids).split("\t");
+                            Log.d(TAG,"identify succ, userid:" + strRes[0] + ", score:" + strRes[1]);
+                        } else {
+                            Log.d(TAG,"identify fail");
+                        }
+                        //Base64 Template
+                        //String strBase64 = Base64.encodeToString(tmpBuffer, 0, fingerprintSensor.getLastTempLen(), Base64.NO_WRAP);
+                    }
+                }
+
+
+            };
+            fingerprintSensor.setFingerprintCaptureListener(0, captureListener);
+            fingerprintSensor.startCapture(0);
+            bstart = true;
+            Log.d(TAG,"start capture succ");
+        }catch (FingerprintException e)
+        {
+            Log.d(TAG,"begin capture fail.errorcode:"+ e.getErrorCode() + "err message:" + e.getMessage() + "inner code:" + e.getInternalErrorCode());
+        }
+    }
+
+    public void OnBnStop() {
+        try {
+            if (bstart)
+            {
+                //stop capture
+                fingerprintSensor.stopCapture(0);
+                bstart = false;
+                fingerprintSensor.close(0);
+                Log.d(TAG,"stop capture succ");
             }
-//            textView.setText("connect failed!");
-        }
-    }
-
-    private void closeDevice()
-    {
-        if (bStarted)
-        {
-            try {
-                fingerprintSensor.stopCapture(deviceIndex);
-                fingerprintSensor.close(deviceIndex);
-            } catch (FingerprintException e) {
-                e.printStackTrace();
+            else
+            {
+                Log.d(TAG,"already stop");
             }
-            bStarted = false;
+        } catch (FingerprintException e) {
+            Log.d(TAG,"stop fail, errno=" + e.getErrorCode() + "\nmessage=" + e.getMessage());
         }
     }
 
-    public void onBnStart()
-    {
-        if (bStarted)
+    public void OnBnEnroll(View view) {
+        if (bstart) {
+            isRegister = true;
+            enrollidx = 0;
+            Log.d(TAG,"You need to press the 3 time fingerprint");
+        }
+        else
         {
-//            textView.setText("Device already connected!");
-            return;
-        }
-        if (!enumSensor())
-        {
-//            textView.setText("Device not found!");
-            return;
-        }
-        tryGetUSBPermission();
-    }
-
-    public void onBnStop()
-    {
-        if (!bStarted)
-        {
-//            textView.setText("Device not connected!");
-            return;
-        }
-        closeDevice();
-//        textView.setText("Device closed!");
-    }
-
-    public void onBnRegister(String id)
-    {
-        if (bStarted) {
-            strUid = id;
-//            if (null == strUid || strUid.isEmpty()) {
-//                textView.setText("Please input your user id");
-//                bRegister = false;
-//                return;
-//            }
-
-            bRegister = true;
-            enroll_index = 0;
-//            textView.setText("Please press your finger 3 times.");
-        } else {
-//            textView.setText("Please start capture first");
+            Log.d(TAG,"please begin capture first");
         }
     }
 
-    public void onBnIdentify()
-    {
-        if (bStarted) {
-            bRegister = false;
-            enroll_index = 0;
-        } else {
-        }
-    }
-
-    private void setResult(String result)
-    {
-        final String mStrText = result;
-
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                textView.setText(mStrText);
-//            }
-//        });
-    }
-
-    public void onBnDelete()
-    {
-        if (bStarted) {
-            ZKFingerService.del(strUid);
-        }
-    }
-
-    public void onBnClear()
-    {
-        if (bStarted) {
-            ZKFingerService.clear();
+    public void OnBnVerify(View view) {
+        if (bstart) {
+            isRegister = false;
+            enrollidx = 0;
+        }else {
+            Log.d(TAG,"please begin capture first");
         }
     }
 

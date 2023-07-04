@@ -18,6 +18,8 @@ public class ButtonServiceAdapter extends RecyclerView.Adapter<ButtonServiceAdap
 
     OnServiceListener listener;
 
+    Boolean hideBalance = false;
+
     public ButtonServiceAdapter(OnServiceListener listener) {
         this.listener = listener;
     }
@@ -48,6 +50,10 @@ public class ButtonServiceAdapter extends RecyclerView.Adapter<ButtonServiceAdap
         return data.size();
     }
 
+    public void hideBalance() {
+        hideBalance = true;
+    }
+
     public class ButtonServiceViewHolder extends RecyclerView.ViewHolder {
 
         private ItemButtonBinding binding;
@@ -62,6 +68,8 @@ public class ButtonServiceAdapter extends RecyclerView.Adapter<ButtonServiceAdap
             binding.textCount.setVisibility(View.GONE);
 
             binding.imageIcon.setImageResource(data.getIcon());
+            binding.balance.setVisibility(View.GONE);
+            binding.hideBalance.setVisibility(View.GONE);
 
             binding.cardButton.setOnClickListener(v -> listener.onClick(data));
         }

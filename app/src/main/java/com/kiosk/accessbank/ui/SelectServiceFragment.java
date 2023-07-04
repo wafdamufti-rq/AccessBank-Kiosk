@@ -37,6 +37,7 @@ public class SelectServiceFragment extends Fragment implements OnServiceListener
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter = new ButtonServiceAdapter(this);
+        adapter.hideBalance();
         binding.recyclerview.setAdapter(adapter);
         viewModel.loadServices();
 
@@ -54,7 +55,7 @@ public class SelectServiceFragment extends Fragment implements OnServiceListener
     @Override
     public void onClick(Service data) {
         viewModel.setSelectedService(data);
-        if (data.getId() == 9)
-            NavHostFragment.findNavController(this).navigate(SelectServiceFragmentDirections.actionSelectServiceFragmentToSelectOptionFragment());
+        if (data.getId() == 8)
+            NavHostFragment.findNavController(this).navigate(SelectServiceFragmentDirections.actionSelectServiceFragmentToSelectOptionFragment(getArguments().getParcelable("customer_account")));
     }
 }

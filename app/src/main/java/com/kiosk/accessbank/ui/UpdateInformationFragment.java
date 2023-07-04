@@ -14,8 +14,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.kiosk.accessbank.R;
 import com.kiosk.accessbank.databinding.FragmentUpdateInformationBinding;
 import com.kiosk.accessbank.source.model.Account;
+import com.kiosk.accessbank.source.model.CustomerAccount;
 import com.kiosk.accessbank.util.UpdateType;
 import com.kiosk.accessbank.viewmodel.MainViewModel;
+import com.kiosk.accessbank.viewmodel.UpdateInformationViewModel;
 
 import java.util.Objects;
 
@@ -25,11 +27,14 @@ public class UpdateInformationFragment extends Fragment {
 
     private MainViewModel viewModel;
 
+    private UpdateInformationViewModel updateInformationViewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentUpdateInformationBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        updateInformationViewModel = new ViewModelProvider(this).get(UpdateInformationViewModel.class);
         return binding.getRoot();
     }
 
@@ -51,7 +56,7 @@ public class UpdateInformationFragment extends Fragment {
     }
 
     private void initObserver() {
-        viewModel.selectedAccountLiveData.observe(getViewLifecycleOwner(), this::initData);
+        updateInformationViewModel.selectedAccountLiveData.observe(getViewLifecycleOwner(), this::initData);
         viewModel.updateInformationSubmitTrigger.observe(getViewLifecycleOwner(), aBoolean ->
                 {
                     if (aBoolean != null && aBoolean) {
@@ -75,13 +80,13 @@ public class UpdateInformationFragment extends Fragment {
         binding.title.setText(getResources().getString(R.string.enter_your_new_type, type));
     }
 
-    private void initData(Account account) {
+    private void initData(CustomerAccount account) {
         if (account == null) return;
 
-        binding.textDate.setText(account.getDate());
-        binding.textAccountNo.setText(account.getNumber());
-        binding.textPhone.setText(account.getPhoneNumber());
-        binding.textEmail.setText(account.getEmail());
+        binding.textDate.setText("-");
+        binding.textAccountNo.setText(account.account_no);
+        binding.textPhone.setText(account.mobile_no);
+        binding.textEmail.setText(account.email_address);
 
     }
 }

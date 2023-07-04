@@ -8,6 +8,7 @@ import androidx.navigation.NavDestination;
 import com.kiosk.accessbank.R;
 import com.kiosk.accessbank.source.api.ApiResponse;
 import com.kiosk.accessbank.source.model.Account;
+import com.kiosk.accessbank.source.model.CustomerAccount;
 import com.kiosk.accessbank.source.model.Service;
 import com.kiosk.accessbank.source.model.User;
 import com.kiosk.accessbank.source.repository.ServiceRepository;
@@ -70,7 +71,7 @@ public class MainViewModel extends BaseViewModel {
     public LiveData<Boolean> submittedLiveData = _submittedLiveData;
     // clear those after destroyed
     private User loggedUser = null;
-    private Account selectedAccount = null;
+    private CustomerAccount selectedAccount = null;
     private Service selectedService = null;
 
 
@@ -96,9 +97,9 @@ public class MainViewModel extends BaseViewModel {
         });
     }
 
-    public void setSelectedAccount(Account account){
-        selectedAccount = account;
-    }
+//    public void setSelectedAccount(Account account){
+//        selectedAccount = account;
+//    }
 
     public void getAccount(){
         userRepository.getAllAccounts(loggedUser.getAuthNumber()).subscribe(new SingleObserver<>() {
@@ -157,7 +158,7 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void loadAccount() {
-        _selectedAccountLiveData.postValue(selectedAccount);
+//        _selectedAccountLiveData.postValue(selectedAccount);
     }
 
     public void submitUpdate(UpdateType updateType, String toString) {

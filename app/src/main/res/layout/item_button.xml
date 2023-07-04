@@ -51,10 +51,38 @@
                 android:textAlignment="center"
                 android:textFontWeight="500"
                 tools:text="77xxxxx897"
+                android:maxLines="1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/image_icon"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Rm.-----"
+                app:layout_constraintTop_toBottomOf="@id/description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textAlignment="center"
+                android:textFontWeight="400"
+                android:textSize="12sp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/hide_balance"
+                style="@style/Widget.Material3.Button.IconButton"
+                app:icon="@drawable/eye_slash_regular"
+                android:layout_width="24dp"
+                android:foregroundGravity="center"
+                app:layout_constraintTop_toTopOf="@id/balance"
+                app:layout_constraintBottom_toBottomOf="@id/balance"
+                app:layout_constraintStart_toEndOf="@id/balance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:iconSize="12dp"
+                android:layout_height="24dp"
+                android:padding="3dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

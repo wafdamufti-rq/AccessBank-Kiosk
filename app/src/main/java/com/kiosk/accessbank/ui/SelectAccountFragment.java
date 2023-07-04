@@ -16,11 +16,17 @@ import com.kiosk.accessbank.databinding.FragmentSelectAccountBinding;
 import com.kiosk.accessbank.listener.OnAccountListener;
 import com.kiosk.accessbank.source.api.ApiResponse;
 import com.kiosk.accessbank.source.model.Account;
+import com.kiosk.accessbank.source.model.CustomerAccount;
 import com.kiosk.accessbank.ui.adapter.ButtonAccountAdapter;
 import com.kiosk.accessbank.viewmodel.MainViewModel;
+import com.kiosk.accessbank.viewmodel.SelectAccountViewModel;
 
 import java.util.ArrayList;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+
+@AndroidEntryPoint
 public class SelectAccountFragment extends Fragment implements OnAccountListener {
 
 
@@ -29,11 +35,15 @@ public class SelectAccountFragment extends Fragment implements OnAccountListener
     private ButtonAccountAdapter adapter;
 
     private MainViewModel viewModel;
+
+    private SelectAccountViewModel selectAccountViewModel;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentSelectAccountBinding.inflate(inflater,container,false);
         viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        selectAccountViewModel = new ViewModelProvider(this).get(SelectAccountViewModel.class);
+        binding = FragmentSelectAccountBinding.inflate(inflater,container,false);
+        selectAccountViewModel.loadCustomers();
         return binding.getRoot();
     }
 
@@ -43,18 +53,17 @@ public class SelectAccountFragment extends Fragment implements OnAccountListener
 
         adapter = new ButtonAccountAdapter(this);
         binding.recyclerview.setAdapter(adapter);
-        viewModel.getAccount();
-        viewModel.accountsLiveData.observe(getViewLifecycleOwner(), arrayListApiResponse -> {
+        selectAccountViewModel.customerAccountsLiveData.observe(getViewLifecycleOwner(), arrayListApiResponse -> {
             if (arrayListApiResponse != null) {
-                adapter.setData(arrayListApiResponse.getData());
+                adapter.setData(arrayListApiResponse);
             }
         });
 
     }
 
     @Override
-    public void onClick(Account data) {
-        viewModel.setSelectedAccount(data);
-        NavHostFragment.findNavController(this).navigate(SelectAccountFragmentDirections.actionSelectAccountFragmentToSelectServiceFragment());
+    public void onClick(CustomerAccount data) {
+//        viewModel.setSelectedAccount(data);
+        NavHostFragment.findNavController(this).navigate(SelectAccountFragmentDirections.actionSelectAccountFragmentToSelectServiceFragment(data));
     }
 }

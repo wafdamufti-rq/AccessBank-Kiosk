@@ -50,14 +50,17 @@ public class LoginFragment extends Fragment {
 
         viewModel.loginLiveData.observe(getViewLifecycleOwner(), userApiResponse -> {
             if (userApiResponse != null) {
-               NavHostFragment.findNavController(this).navigate( LoginFragmentDirections.actionLoginFragmentToVerificationFragment());
+               NavHostFragment.findNavController(this).navigate( LoginFragmentDirections.actionLoginFragmentToVerificationFragment(String.valueOf(userApiResponse.getData().getAuthNumber())));
             }
         });
 
         viewModel.loginTrigger.observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean != null && aBoolean) {
                 if (binding.textInputAccountNumber.getEditText().getText().toString().length() > 0) {
-                    viewModel.login(Long.parseLong(Objects.requireNonNull(binding.textInputAccountNumber.getEditText()).getText().toString()));
+
+                    NavHostFragment.findNavController(this).navigate( LoginFragmentDirections.actionLoginFragmentToVerificationFragment(binding.textInputAccountNumber.getEditText().getText().toString()));
+
+//                    viewModel.login(Long.parseLong(Objects.requireNonNull(binding.textInputAccountNumber.getEditText()).getText().toString()));
                 } else {
                     binding.textInputAccountNumber.setError("Please fill your account number");
                 }
@@ -71,8 +74,10 @@ public class LoginFragment extends Fragment {
     @NonNull
     private View.OnClickListener inputTrigger(String s) {
         return v -> {
+            Editable text = Objects.requireNonNull(binding.textInputAccountNumber.getEditText()).getText();
+
             if (s.equals("back")) {
-                Editable text = Objects.requireNonNull(binding.textInputAccountNumber.getEditText()).getText();
+                if (text.length() == 0) return;
                 Objects.requireNonNull(binding.textInputAccountNumber.getEditText()).setText(text.delete(text.length() - 1, text.length()));
                 return;
             }

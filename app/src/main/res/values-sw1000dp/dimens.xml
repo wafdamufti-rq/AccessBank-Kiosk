@@ -30,4 +30,6 @@
     <dimen name="text_size_description_confirmation">30sp</dimen>
     <dimen name="size_icon_confirmation">125dp</dimen>
 
+<!--    oval face size positio-->
+
 </resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="face_top_position">125</integer>
+    <integer name="face_left_Position">75</integer>
+    <integer name="face_right_position">425</integer>
+    <integer name="face_bottom_Position">475</integer>
+</resources>

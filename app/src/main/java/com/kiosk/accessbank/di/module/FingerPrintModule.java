@@ -16,8 +16,5 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 @InstallIn(ActivityComponent.class)
 public class FingerPrintModule {
 
-    @Provides
-    public FingerprintHandler provideFingerPrint(@ActivityContext Context context){
-        return  new FingerprintHandler(context);
-    }
+
 }

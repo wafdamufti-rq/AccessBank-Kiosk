@@ -4,9 +4,7 @@ import static android.view.View.GONE;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -40,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     public KioskManager kioskManager;
 
-    @Inject
-            public FingerprintHandler fingerprintHandler;
-
     NavController navController;
     private ActivityMainBinding binding;
     private MainViewModel viewModel;
@@ -52,18 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        fingerprintHandler.addListener(new FingerprintHandler.FingerprintListener() {
-            @Override
-            public void onSuccess(byte[] value, String result) {
 
-            }
-
-            @Override
-            public void onFailed(String message) {
-                Log.d("fingerprint",message);
-            }
-        });
-        fingerprintHandler.onBnIdentify();
         setContentView(binding.getRoot());
         initNavController();
         initListener();
