@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_button"
+        android:layout_width="@dimen/size_item_button"
+        app:cardElevation="0dp"
+        android:layout_height="@dimen/size_item_button"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/margin_input_number"
+        app:cardCornerRadius="20dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin_top_icon_item_button"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/image_icon"
+                android:layout_width="@dimen/size_icon_item_button"
+                android:layout_height="@dimen/size_icon_item_button"
+                android:src="@drawable/ic_account"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/text_count"
+                app:layout_constraintEnd_toEndOf="@id/image_icon"
+                app:layout_constraintBottom_toBottomOf="@id/image_icon"
+                android:layout_marginEnd="@dimen/margin_icon_count"
+                android:layout_marginBottom="@dimen/margin_icon_count"
+                app:layout_constraintHorizontal_bias="1"
+                android:text="1"
+                android:textColor="@color/orange"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:paddingBottom="5dp"
+                android:background="@drawable/circle_background"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_item_button"
+                android:textAlignment="center"
+                android:textFontWeight="500"
+                tools:text="77xxxxx897"
+                android:maxLines="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_icon"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Rm.-----"
+                app:layout_constraintTop_toBottomOf="@id/description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textAlignment="center"
+                android:textFontWeight="400"
+                android:textSize="12sp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/hide_balance"
+                style="@style/Widget.Material3.Button.IconButton"
+                app:icon="@drawable/eye_slash_regular"
+                android:layout_width="24dp"
+                android:foregroundGravity="center"
+                app:layout_constraintTop_toTopOf="@id/balance"
+                app:layout_constraintBottom_toBottomOf="@id/balance"
+                app:layout_constraintStart_toEndOf="@id/balance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:iconSize="12dp"
+                android:layout_height="24dp"
+                android:padding="3dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>
