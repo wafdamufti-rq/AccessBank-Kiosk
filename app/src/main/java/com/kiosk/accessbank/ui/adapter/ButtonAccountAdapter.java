@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ButtonAccountAdapter extends RecyclerView.Adapter<ButtonAccountAdapter.ButtonAccountViewHolder> {
 
-     OnAccountListener listener;
+    OnAccountListener listener;
     public ButtonAccountAdapter(OnAccountListener listener){
         this.listener = listener;
     }
@@ -60,7 +60,8 @@ public class ButtonAccountAdapter extends RecyclerView.Adapter<ButtonAccountAdap
         }
 
         public void bind(CustomerAccount data, int i){
-            binding.description.setText(data.account_name);
+            binding.description.setText(data.account_no);
+            binding.accountName.setText(data.account_name);
             validateHideBalance(data);
             binding.hideBalance.setOnClickListener(v -> {
                 hide = !hide;

@@ -21,28 +21,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headline"
-        app:layout_constraintVertical_bias="1"
-        android:textAppearance="?textAppearanceHeadline1"
-        app:layout_constraintBottom_toTopOf="@id/text_number"
-        android:layout_marginBottom="@dimen/margin_top_title"
-        android:textStyle="bold"
-        android:textSize="@dimen/text_size_account_name"
-        android:visibility="gone"
-        android:textColor="@color/white"
-        android:text="CHUCKMEDIA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
         android:id="@+id/text_number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/recyclerview"
-        app:layout_constraintTop_toBottomOf="@id/text_name"
+        app:layout_constraintTop_toBottomOf="@id/headline"
         android:textAppearance="?textAppearanceSubtitle1"
         android:textSize="@dimen/button_bottom_text_size"
         android:textColor="@color/white"
