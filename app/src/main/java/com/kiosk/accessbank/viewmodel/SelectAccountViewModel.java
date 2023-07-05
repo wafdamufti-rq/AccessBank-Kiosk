@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 
-import com.kiosk.accessbank.source.api.ApiResponse;
-import com.kiosk.accessbank.source.api.CustomerAccountResponse;
+import com.kiosk.accessbank.source.model.CustomerAccountResponse;
 import com.kiosk.accessbank.source.model.CustomerAccount;
 import com.kiosk.accessbank.source.repository.UserRepository;
 
@@ -13,7 +12,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.assisted.Assisted;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.SingleObserver;

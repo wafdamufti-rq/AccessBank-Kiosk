@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.kiosk.accessbank.databinding.FragmentSelectAccountBinding;
 import com.kiosk.accessbank.listener.OnAccountListener;
@@ -55,6 +57,11 @@ public class SelectAccountFragment extends Fragment implements OnAccountListener
         binding.recyclerview.setAdapter(adapter);
         selectAccountViewModel.customerAccountsLiveData.observe(getViewLifecycleOwner(), arrayListApiResponse -> {
             if (arrayListApiResponse != null) {
+                GridLayoutManager layoutManager = (GridLayoutManager) binding.recyclerview.getLayoutManager();
+                if (layoutManager != null) {
+                    layoutManager.setSpanCount(arrayListApiResponse.size() > 2 ? 3 : arrayListApiResponse.size());
+                }
+                binding.recyclerview.setLayoutManager(layoutManager);
                 adapter.setData(arrayListApiResponse);
             }
         });

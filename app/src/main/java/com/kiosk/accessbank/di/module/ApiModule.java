@@ -1,6 +1,6 @@
 package com.kiosk.accessbank.di.module;
 
-import com.kiosk.accessbank.source.api.LoginService;
+import com.kiosk.accessbank.source.api.UserService;
 import com.kiosk.accessbank.source.api.ServiceService;
 
 import java.util.concurrent.TimeUnit;
@@ -33,8 +33,8 @@ public class ApiModule {
 
 
     @Provides
-    LoginService provideLoginService(Retrofit retrofit) {
-        return retrofit.create(LoginService.class);
+    UserService provideLoginService(Retrofit retrofit) {
+        return retrofit.create(UserService.class);
     }
 
     @Provides

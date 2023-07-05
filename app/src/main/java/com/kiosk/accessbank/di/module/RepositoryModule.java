@@ -1,6 +1,6 @@
 package com.kiosk.accessbank.di.module;
 
-import com.kiosk.accessbank.source.api.LoginService;
+import com.kiosk.accessbank.source.api.UserService;
 import com.kiosk.accessbank.source.api.ServiceService;
 import com.kiosk.accessbank.source.repository.ServiceRepository;
 import com.kiosk.accessbank.source.repository.ServiceRepositoryImpl;
@@ -17,8 +17,8 @@ import dagger.hilt.android.components.ViewModelComponent;
 public class RepositoryModule {
 
     @Provides
-    UserRepository provideUserRepository(LoginService loginService) {
-        return new UserRepositoryImpl(loginService);
+    UserRepository provideUserRepository(UserService userService) {
+        return new UserRepositoryImpl(userService);
     }
 
     @Provides

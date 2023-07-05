@@ -1,11 +1,13 @@
-package com.kiosk.accessbank.source.api;
+package com.kiosk.accessbank.source.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.kiosk.accessbank.source.model.AccountSummary;
 import com.kiosk.accessbank.source.model.CustomerAccount;
 
 import java.util.List;
 
-public class CustomerAccountResponse {
+public class AccountSummaryResponse
+{
     @SerializedName("response_code")
     private String code;
     @SerializedName("response_message")
@@ -13,9 +15,9 @@ public class CustomerAccountResponse {
     private String message;
     @SerializedName("getcustomeracctsdetailsresp")
 
-    private List<CustomerAccount> data;
+    private List<AccountSummary> data;
 
-    public CustomerAccountResponse(String code,String message, List<CustomerAccount> data){
+    public AccountSummaryResponse(String code,String message, List<AccountSummary> data){
         this.code = code;
         this.message = message;
         this.data = data;
@@ -37,11 +39,11 @@ public class CustomerAccountResponse {
         this.message = message;
     }
 
-    public List<CustomerAccount> getData() {
+    public List<AccountSummary> getData() {
         return data;
     }
 
-    public void setData(List<CustomerAccount> data) {
+    public void setData(List<AccountSummary> data) {
         this.data = data;
     }
 }

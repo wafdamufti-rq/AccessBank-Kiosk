@@ -11,7 +11,7 @@
         android:layout_width="@dimen/size_item_button"
         app:cardElevation="0dp"
         android:layout_height="@dimen/size_item_button"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/margin_input_number"
         app:cardCornerRadius="20dp">
         <androidx.constraintlayout.widget.ConstraintLayout
