@@ -8,12 +8,12 @@ import java.util.List;
 
 public class AccountSummaryResponse
 {
-    @SerializedName("response_code")
+    @SerializedName("ResponseCode")
     private String code;
-    @SerializedName("response_message")
+    @SerializedName("ResponseMessage")
 
     private String message;
-    @SerializedName("getcustomeracctsdetailsresp")
+    @SerializedName("getacctsummarybycustomernosresp")
 
     private List<AccountSummary> data;
 

@@ -3,10 +3,15 @@ package com.kiosk.accessbank.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
+import com.kiosk.accessbank.source.model.AccountSummary;
+import com.kiosk.accessbank.source.model.AccountSummaryResponse;
 import com.kiosk.accessbank.source.model.CustomerAccountResponse;
 import com.kiosk.accessbank.source.model.CustomerAccount;
 import com.kiosk.accessbank.source.repository.UserRepository;
+import com.kiosk.accessbank.util.Constants;
 
 import java.util.List;
 
@@ -24,6 +29,11 @@ public class SelectAccountViewModel extends BaseViewModel{
 
     private UserRepository userRepository;
 
+
+
+    private MutableLiveData<CustomerAccount> _accountLiveData = new MutableLiveData<>();
+    public LiveData<CustomerAccount> accountLiveData = _accountLiveData;
+
     public SelectAccountViewModel(){
 
     }
@@ -31,21 +41,23 @@ public class SelectAccountViewModel extends BaseViewModel{
     public SelectAccountViewModel( SavedStateHandle savedStateHandle, UserRepository userRepository) {
         this.savedStateHandle = savedStateHandle;
         this.userRepository = userRepository;
+
+        _accountLiveData.postValue(savedStateHandle.get(Constants.ACCOUNT_EXTRA));
     }
 
 
-    private MutableLiveData<List<CustomerAccount>> _customerAccountsLiveData = new MutableLiveData<>();
-    public LiveData<List<CustomerAccount>> customerAccountsLiveData = _customerAccountsLiveData;
+    private MutableLiveData<List<AccountSummary>> _customerAccountsLiveData = new MutableLiveData<>();
+    public LiveData<List<AccountSummary>> customerAccountsLiveData = _customerAccountsLiveData;
 
     public void loadCustomers(){
-        userRepository.getAccountDetails(savedStateHandle.get("account_no")).subscribe(new SingleObserver<>() {
+        userRepository.getAccountSummaryByCustomerID(savedStateHandle.get("acc")).subscribe(new SingleObserver<>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
                 disposable.add(d);
             }
 
             @Override
-            public void onSuccess(@NonNull CustomerAccountResponse listApiResponse) {
+            public void onSuccess(@NonNull AccountSummaryResponse listApiResponse) {
                 if (listApiResponse.getCode().equals("00")){
                     _customerAccountsLiveData.postValue(listApiResponse.getData());
                 }

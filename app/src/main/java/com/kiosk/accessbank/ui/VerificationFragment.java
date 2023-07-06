@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,17 +18,21 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.kiosk.accessbank.R;
 import com.kiosk.accessbank.camera.CameraManager;
 import com.kiosk.accessbank.camera.PositionFaceListener;
 import com.kiosk.accessbank.databinding.FragmentVerificationBinding;
 import com.kiosk.accessbank.fingerprint.FingerprintHandler;
+import com.kiosk.accessbank.source.model.CustomerAccount;
 import com.kiosk.accessbank.util.ToastUtils;
 import com.kiosk.accessbank.viewmodel.MainViewModel;
 import com.kiosk.accessbank.viewmodel.VerificationViewModel;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
-@ExperimentalGetImage @AndroidEntryPoint
+@ExperimentalGetImage
+@AndroidEntryPoint
 public class VerificationFragment extends Fragment implements FingerprintHandler.FingerprintListener, PositionFaceListener {
 
     private static final String FINGERPRINT_TAG = "fingerprint";
@@ -48,7 +54,6 @@ public class VerificationFragment extends Fragment implements FingerprintHandler
 
 
     private CameraManager cameraManager;
-
 
 
     @Override
@@ -84,13 +89,35 @@ public class VerificationFragment extends Fragment implements FingerprintHandler
 
         binding.cardFingerprint.setOnClickListener(v -> {
             Toast.makeText(requireContext(), "This test using hardcoded dummy data", Toast.LENGTH_LONG).show();
-            NavHostFragment.findNavController(VerificationFragment.this).navigate(VerificationFragmentDirections.actionVerificationFragmentToSelectAccountFragment(getArguments().getString("account_no")));
+
+            validateLogin(binding.animationLoginFingerprint);
+
 
         });
 
         showFingerPrint();
         showFaceRecognition();
 
+    }
+
+    private void validateLogin(LottieAnimationView view) {
+//        Animation animation = AnimationUtils.loadAnimation(requireContext(), R.anim.);
+
+        view.setVisibility(View.VISIBLE);
+        verificationViewModel.login(new VerificationViewModel.CustomerAccountLoginListener() {
+            @Override
+            public void onLogin(CustomerAccount customerAccount) {
+                NavHostFragment.findNavController(VerificationFragment.this).navigate(com.kiosk.accessbank.ui.VerificationFragmentDirections.actionVerificationFragmentToSelectAccountFragment(customerAccount));
+                view.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFail(String message) {
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+                view.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -139,13 +166,12 @@ public class VerificationFragment extends Fragment implements FingerprintHandler
     }
 
 
-
     private void createCameraManager() {
         cameraManager = new CameraManager(
                 requireContext(),
                 binding.preview,
                 this,
-                binding.graphicOverlayFinder,this
+                binding.graphicOverlayFinder, this
         );
     }
 
@@ -173,9 +199,8 @@ public class VerificationFragment extends Fragment implements FingerprintHandler
 
     @Override
     public void onSuccess(byte[] value, String result) {
-//        ToastUtils.show(requireContext(),result);
-        Toast.makeText(requireContext(), "This test using hardcoded dummy data", Toast.LENGTH_LONG).show();
-        NavHostFragment.findNavController(VerificationFragment.this).navigate(VerificationFragmentDirections.actionVerificationFragmentToSelectAccountFragment(getArguments().getString("account_no")));
+        validateLogin(binding.animationLoginFingerprint);
+
     }
 
     @Override
@@ -186,8 +211,8 @@ public class VerificationFragment extends Fragment implements FingerprintHandler
 
     @Override
     public void onProgress(float progress) {
-        if (binding.layoutFacial.getVisibility() == View.VISIBLE){
-            binding.icFacialAlpha.setAlpha(progress > 0.7f ? 0.0f  : progress >0.5f ? 0.4f : progress > 0.2f ? 0.7f  : 1f);
+        if (binding.layoutFacial.getVisibility() == View.VISIBLE) {
+            binding.icFacialAlpha.setAlpha(progress > 0.7f ? 0.0f : progress > 0.5f ? 0.4f : progress > 0.2f ? 0.7f : 1f);
         }
     }
 
@@ -198,13 +223,13 @@ public class VerificationFragment extends Fragment implements FingerprintHandler
 
     @Override
     public void onFUllProgressReached() {
-        if (binding.layoutFacial.getVisibility() == View.GONE){
+        if (binding.layoutFacial.getVisibility() == View.GONE) {
             return;
         }
-        if (!faceInProcess){
+        if (!faceInProcess) {
             faceInProcess = true;
-            Toast.makeText(requireContext(), "This test using hardcoded dummy data", Toast.LENGTH_LONG).show();
-            NavHostFragment.findNavController(VerificationFragment.this).navigate(VerificationFragmentDirections.actionVerificationFragmentToSelectAccountFragment(getArguments().getString("account_no")));
+            validateLogin(binding.animationViewFacial);
+
             cameraManager = null;
         }
 

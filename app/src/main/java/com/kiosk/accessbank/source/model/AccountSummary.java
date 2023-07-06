@@ -1,41 +1,136 @@
 package com.kiosk.accessbank.source.model;
 
-public class AccountSummary {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+import com.google.gson.annotations.SerializedName;
+
+public class AccountSummary implements Parcelable {
+
+    @SerializedName("AccountName")
     private String accountName;
+    @SerializedName("AccountNo")
     private String accountNo;
+    @SerializedName("AccountOpenDate")
     private String accountOpenDate;
+    @SerializedName("AccountStatus")
     private String accountStatus;
+    @SerializedName("AcctOpeningBalance")
     private long acctOpeningBalance;
+    @SerializedName("AmountBlocked")
     private long amountBlocked;
+    @SerializedName("amt_od_limit")
     private long amtOdLimit;
+    @SerializedName("AmtOdLimit")
     private long availableBalance;
+    @SerializedName("BranchAddress")
     private String branchAddress;
+    @SerializedName("BranchCity")
     private String branchCity;
+    @SerializedName("BranchCode")
     private String branchCode;
+    @SerializedName("BranchName")
     private String branchName;
+    @SerializedName("BranchState")
     private String branchState;
+    @SerializedName("BVN")
     private String bvn;
+
+    @SerializedName("ClearedBalance")
     private long clearedBalance;
+    @SerializedName("ClosingBalance")
     private long closingBalance;
+    @SerializedName("CurrencyCode")
     private String currencyCode;
+    @SerializedName("CurrencyName")
     private String currencyName;
+    @SerializedName("CustID")
     private String custID;
+    @SerializedName("HasCOT")
     private long hasCOT;
+    @SerializedName("hasImage")
     private long hasImage;
+    @SerializedName("IsStaff")
     private String isStaff;
+    @SerializedName("LoanStatus")
     private String loanStatus;
+    @SerializedName("Lodgement")
     private long lodgement;
+    @SerializedName("NetBalance")
     private long netBalance;
+    @SerializedName("ProductCode")
     private String productCode;
+    @SerializedName("ProductCodeDesc")
     private String productCodeDesc;
+    @SerializedName("TotalBalance")
     private long totalBalance;
+    @SerializedName("UnclearedBalance")
     private long unclearedBalance;
+    @SerializedName("Withdrawal")
     private long withdrawal;
+    @SerializedName("CustomerSegment")
     private String customerSegment;
+    @SerializedName("hasFixedDeposit")
+
     private String hasFixedDeposit;
+    @SerializedName("tier")
     private String tier;
+    @SerializedName("ac_class_type")
     private String acClassType;
+    @SerializedName("customer_type")
     private String customerType;
+
+    protected AccountSummary(Parcel in) {
+        accountName = in.readString();
+        accountNo = in.readString();
+        accountOpenDate = in.readString();
+        accountStatus = in.readString();
+        acctOpeningBalance = in.readLong();
+        amountBlocked = in.readLong();
+        amtOdLimit = in.readLong();
+        availableBalance = in.readLong();
+        branchAddress = in.readString();
+        branchCity = in.readString();
+        branchCode = in.readString();
+        branchName = in.readString();
+        branchState = in.readString();
+        bvn = in.readString();
+        clearedBalance = in.readLong();
+        closingBalance = in.readLong();
+        currencyCode = in.readString();
+        currencyName = in.readString();
+        custID = in.readString();
+        hasCOT = in.readLong();
+        hasImage = in.readLong();
+        isStaff = in.readString();
+        loanStatus = in.readString();
+        lodgement = in.readLong();
+        netBalance = in.readLong();
+        productCode = in.readString();
+        productCodeDesc = in.readString();
+        totalBalance = in.readLong();
+        unclearedBalance = in.readLong();
+        withdrawal = in.readLong();
+        customerSegment = in.readString();
+        hasFixedDeposit = in.readString();
+        tier = in.readString();
+        acClassType = in.readString();
+        customerType = in.readString();
+    }
+
+    public static final Creator<AccountSummary> CREATOR = new Creator<AccountSummary>() {
+        @Override
+        public AccountSummary createFromParcel(Parcel in) {
+            return new AccountSummary(in);
+        }
+
+        @Override
+        public AccountSummary[] newArray(int size) {
+            return new AccountSummary[size];
+        }
+    };
 
     public String getAccountName() { return accountName; }
     public void setAccountName(String value) { this.accountName = value; }
@@ -141,4 +236,48 @@ public class AccountSummary {
 
     public String getCustomerType() { return customerType; }
     public void setCustomerType(String value) { this.customerType = value; }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(accountName);
+        dest.writeString(accountNo);
+        dest.writeString(accountOpenDate);
+        dest.writeString(accountStatus);
+        dest.writeLong(acctOpeningBalance);
+        dest.writeLong(amountBlocked);
+        dest.writeLong(amtOdLimit);
+        dest.writeLong(availableBalance);
+        dest.writeString(branchAddress);
+        dest.writeString(branchCity);
+        dest.writeString(branchCode);
+        dest.writeString(branchName);
+        dest.writeString(branchState);
+        dest.writeString(bvn);
+        dest.writeLong(clearedBalance);
+        dest.writeLong(closingBalance);
+        dest.writeString(currencyCode);
+        dest.writeString(currencyName);
+        dest.writeString(custID);
+        dest.writeLong(hasCOT);
+        dest.writeLong(hasImage);
+        dest.writeString(isStaff);
+        dest.writeString(loanStatus);
+        dest.writeLong(lodgement);
+        dest.writeLong(netBalance);
+        dest.writeString(productCode);
+        dest.writeString(productCodeDesc);
+        dest.writeLong(totalBalance);
+        dest.writeLong(unclearedBalance);
+        dest.writeLong(withdrawal);
+        dest.writeString(customerSegment);
+        dest.writeString(hasFixedDeposit);
+        dest.writeString(tier);
+        dest.writeString(acClassType);
+        dest.writeString(customerType);
+    }
 }

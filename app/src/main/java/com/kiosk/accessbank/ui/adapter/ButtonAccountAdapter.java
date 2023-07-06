@@ -11,6 +11,7 @@ import com.kiosk.accessbank.R;
 import com.kiosk.accessbank.databinding.ItemButtonBinding;
 import com.kiosk.accessbank.listener.OnAccountListener;
 import com.kiosk.accessbank.source.model.Account;
+import com.kiosk.accessbank.source.model.AccountSummary;
 import com.kiosk.accessbank.source.model.CustomerAccount;
 
 import java.util.ArrayList;
@@ -23,9 +24,9 @@ public class ButtonAccountAdapter extends RecyclerView.Adapter<ButtonAccountAdap
         this.listener = listener;
     }
 
-    private List<CustomerAccount> data = new ArrayList<>();
+    private List<AccountSummary> data = new ArrayList<>();
 
-    public void setData(List<CustomerAccount> data) {
+    public void setData(List<AccountSummary> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -59,9 +60,9 @@ public class ButtonAccountAdapter extends RecyclerView.Adapter<ButtonAccountAdap
             this.binding = binding;
         }
 
-        public void bind(CustomerAccount data, int i){
-            binding.description.setText(data.account_no);
-            binding.accountName.setText(data.account_name);
+        public void bind(AccountSummary data, int i){
+            binding.description.setText(data.getAccountNo());
+            binding.accountName.setText(data.getAccountName());
             validateHideBalance(data);
             binding.hideBalance.setOnClickListener(v -> {
                 hide = !hide;
@@ -72,12 +73,12 @@ public class ButtonAccountAdapter extends RecyclerView.Adapter<ButtonAccountAdap
             binding.textCount.setText(String.valueOf(i));
         }
 
-        private void validateHideBalance(CustomerAccount data) {
+        private void validateHideBalance(AccountSummary data) {
             if (hide){
                 binding.balance.setText("xxxxxx");
                 binding.hideBalance.setIconResource(R.drawable.eye_slash_regular);
             }else{
-                binding.balance.setText(data.currency_code+" "+ data.net_balance);
+                binding.balance.setText(data.getCurrencyCode()+" "+ data.getTotalBalance());
                 binding.hideBalance.setIconResource(R.drawable.eye_regular);
 
             }

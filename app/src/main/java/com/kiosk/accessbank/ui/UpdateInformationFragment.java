@@ -1,9 +1,11 @@
 package com.kiosk.accessbank.ui;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,13 +15,16 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.kiosk.accessbank.R;
 import com.kiosk.accessbank.databinding.FragmentUpdateInformationBinding;
-import com.kiosk.accessbank.source.model.Account;
 import com.kiosk.accessbank.source.model.CustomerAccount;
 import com.kiosk.accessbank.util.UpdateType;
 import com.kiosk.accessbank.viewmodel.MainViewModel;
 import com.kiosk.accessbank.viewmodel.UpdateInformationViewModel;
 
 import java.util.Objects;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 
 public class UpdateInformationFragment extends Fragment {
 
@@ -44,27 +49,47 @@ public class UpdateInformationFragment extends Fragment {
 
 
 
+        initInput();
         initObserver();
         loadData();
+
 
         initTitle();
 
     }
 
+    private void initInput() {
+        if ((UpdateType) getArguments().get("updateType") == UpdateType.PHONE ){
+            binding.inputForm.getEditText().setInputType(InputType.TYPE_CLASS_PHONE);
+        }
+    }
+
     private void loadData() {
-        viewModel.loadAccount();
+//        viewModel.loadAccount();
+        updateInformationViewModel.loadAccount();
     }
 
     private void initObserver() {
         updateInformationViewModel.selectedAccountLiveData.observe(getViewLifecycleOwner(), this::initData);
         viewModel.updateInformationSubmitTrigger.observe(getViewLifecycleOwner(), aBoolean ->
+
                 {
                     if (aBoolean != null && aBoolean) {
-                        viewModel.submitUpdate( (UpdateType) getArguments().get("updateType"),Objects.requireNonNull(binding.inputForm.getEditText()).getText().toString());
+                        viewModel.closeUpdateInformationSubmitTrigger();
+                        binding.animationViewFacial.setVisibility(View.VISIBLE);
+                        updateInformationViewModel.submitUpdate( (UpdateType) getArguments().get("updateType"),Objects.requireNonNull(binding.inputForm.getEditText()).getText().toString());
                     }
                 }
          );
-        viewModel.submittedLiveData.observe(getViewLifecycleOwner(), this::validateSubmit);
+        updateInformationViewModel.submittedLiveData.observe(getViewLifecycleOwner(), t ->{
+            binding.animationViewFacial.setVisibility(View.GONE);
+
+            if (t.getCode().equals("00")){
+                validateSubmit(true);
+            }else{
+                Toast.makeText(requireContext(),t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void validateSubmit(Boolean aBoolean) {

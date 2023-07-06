@@ -28,7 +28,7 @@ public class ServiceRepositoryImpl extends BaseRepository implements ServiceRepo
         list.add(new Service(6,"Foreign Fund Transfer",R.drawable.ic_foreign_fund_transfer));
         list.add(new Service(7,"Pay Direct(Cable TV,Lottery, FIRS",R.drawable.ic_payment_digital));
         list.add(new Service(8, "Update Info",R.drawable.ic_customer_info));
-        return Single.just(new ApiResponse<>(200, "success", list
+        return Single.just(new ApiResponse<>("00", "success", list
         ));
     }
 }

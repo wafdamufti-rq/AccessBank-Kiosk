@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:background="@drawable/background_content"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/background_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_fingerprint"
@@ -17,32 +17,43 @@
         app:layout_constraintVertical_bias="0.5">
 
         <TextView
-            android:textAppearance="?textAppearanceHeadline2"
-            android:textSize="@dimen/title_text_size"
-            android:textAlignment="center"
-            android:layout_marginTop="@dimen/margin_top_title"
-            android:textColor="@color/white"
-            android:textStyle="bold"
             android:id="@+id/title_fingerprint"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/place_you_fingerprint" />
+            android:layout_marginTop="@dimen/margin_top_title"
+            android:text="@string/place_you_fingerprint"
+            android:textAlignment="center"
+            android:textAppearance="?textAppearanceHeadline2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@id/card_fingerprint"
             android:layout_width="@dimen/width_card_verify"
-            app:cardCornerRadius="16dp"
+            android:layout_height="@dimen/width_card_verify"
             android:layout_marginTop="@dimen/margin_top_verify"
+            app:cardCornerRadius="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_fingerprint"
-            android:layout_height="@dimen/width_card_verify">
+            app:layout_constraintTop_toBottomOf="@id/title_fingerprint">
+
             <ImageView
-                android:layout_gravity="center"
-                android:src="@drawable/fingerprint"
                 android:layout_width="@dimen/icon_card_verify_size"
-                android:layout_height="@dimen/icon_card_verify_size"/>
+                android:layout_height="@dimen/icon_card_verify_size"
+                android:layout_gravity="center"
+                android:src="@drawable/fingerprint" />
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_login_fingerprint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading_dot" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -60,44 +71,44 @@
 
         <TextView
             android:id="@+id/text_progress_fingerprint"
-            app:layout_constraintTop_toBottomOf="@id/progress_fingerprint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/margin_default"
+            android:text="Please Wait"
             android:textAppearance="?textAppearanceHeadline3"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_progress_indicator"
-            android:text="Please Wait"/>
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progress_fingerprint" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_facial"
             style="@style/MyTheme.Button.Outline"
             android:layout_width="0dp"
-            app:layout_constraintWidth_percent="0.7"
             android:layout_height="@dimen/height_input_number"
             android:layout_marginBottom="@dimen/margin_top_title"
+            android:paddingStart="@dimen/margin_default"
             android:text="@string/facial_recognition_all_cap"
+            android:textSize="@dimen/button_bottom_text_size"
             app:icon="@drawable/ic_facial"
             app:iconPadding="0dp"
-            android:textSize="@dimen/button_bottom_text_size"
             app:iconSize="@dimen/icon_size_button"
             app:iconTint="@color/grey"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:paddingStart="@dimen/margin_default"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintWidth_percent="0.7" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_facial"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5">
@@ -106,24 +117,23 @@
             android:id="@+id/title_facial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?textAppearanceHeadline2"
-            android:textSize="@dimen/title_text_size"
-            android:textAlignment="center"
             android:layout_marginTop="@dimen/margin_top_title"
-            android:textColor="@color/white"
-            android:textStyle="bold"
             android:text="Please look at the camera"
+            android:textAlignment="center"
+            android:textAppearance="?textAppearanceHeadline2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_text_size"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <FrameLayout
             android:id="@+id/layout_preview"
             android:layout_width="@dimen/width_card_verify"
-            android:layout_marginTop="@dimen/margin_top_verify"
             android:layout_height="@dimen/width_card_verify"
+            android:layout_marginTop="@dimen/margin_top_verify"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -137,14 +147,23 @@
             <com.kiosk.accessbank.camera.GraphicOverlay
                 android:id="@+id/graphicOverlay_finder"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <ImageView
                 android:id="@+id/ic_facial_alpha"
-                android:src="@drawable/ic_facial"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.2"/>
+                android:alpha="0.2"
+                android:src="@drawable/ic_facial" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_view_facial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:visibility="gone"
+                app:lottie_rawRes="@raw/loading_dot" />
 
 
         </FrameLayout>
@@ -164,35 +183,35 @@
 
         <TextView
             android:id="@+id/text_progress_facial"
-            app:layout_constraintTop_toBottomOf="@id/progress_facial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textSize="@dimen/text_size_progress_indicator"
             android:layout_marginTop="@dimen/margin_default"
+            android:text="Please Wait"
             android:textAppearance="?textAppearanceHeadline3"
             android:textColor="@color/white"
-            android:text="Please Wait"/>
+            android:textSize="@dimen/text_size_progress_indicator"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progress_facial" />
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_fingerprint"
             style="@style/MyTheme.Button.Outline"
             android:layout_width="0dp"
-            app:layout_constraintWidth_percent="0.7"
             android:layout_height="@dimen/height_input_number"
             android:layout_marginBottom="@dimen/margin_top_title"
             android:text="FINGERPRINT"
-            app:iconSize="@dimen/icon_size_button"
+            android:textSize="@dimen/button_bottom_text_size"
             app:icon="@drawable/fingerprint"
             app:iconPadding="10dp"
-            android:textSize="@dimen/button_bottom_text_size"
+            app:iconSize="@dimen/icon_size_button"
             app:iconTint="@color/grey"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintWidth_percent="0.7" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

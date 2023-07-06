@@ -24,7 +24,10 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:launchSingleTop="true" />
         <argument
-            android:name="customer_account"
+            android:name="account_summary"
+            app:argType="com.kiosk.accessbank.source.model.AccountSummary" />
+        <argument
+            android:name="account"
             app:argType="com.kiosk.accessbank.source.model.CustomerAccount" />
     </fragment>
     <fragment
@@ -82,8 +85,8 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
-            android:name="account_no"
-            app:argType="string" />
+            android:name="account"
+            app:argType="com.kiosk.accessbank.source.model.CustomerAccount" />
     </fragment>
     <fragment
         android:id="@+id/updateInformationFragment"
@@ -110,7 +113,10 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
-            android:name="customer_account"
+            android:name="account_summary"
+            app:argType="com.kiosk.accessbank.source.model.AccountSummary" />
+        <argument
+            android:name="account"
             app:argType="com.kiosk.accessbank.source.model.CustomerAccount" />
     </fragment>
     <fragment
@@ -133,7 +139,10 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <argument
-            android:name="customer_account"
+            android:name="account_summary"
+            app:argType="com.kiosk.accessbank.source.model.AccountSummary" />
+        <argument
+            android:name="account"
             app:argType="com.kiosk.accessbank.source.model.CustomerAccount" />
     </fragment>
 

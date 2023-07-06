@@ -30,7 +30,6 @@
         android:textSize="@dimen/button_bottom_text_size"
         android:textColor="@color/white"
         android:textFontWeight="700"
-        android:visibility="gone"
         android:text="xxxx-xxxxx-xxxx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -52,6 +51,18 @@
         app:spanCount="3"
         tools:listitem="@layout/item_button" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="gone"
+        app:lottie_rawRes="@raw/loading" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

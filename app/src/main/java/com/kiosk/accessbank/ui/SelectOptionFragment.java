@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.kiosk.accessbank.databinding.FragmentSelectOptionBinding;
+import com.kiosk.accessbank.util.Constants;
 import com.kiosk.accessbank.util.UpdateType;
 import com.kiosk.accessbank.viewmodel.MainViewModel;
 
@@ -35,7 +36,7 @@ public class SelectOptionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonUpdatePhone.setOnClickListener(v -> NavHostFragment.findNavController(SelectOptionFragment.this).navigate(SelectOptionFragmentDirections.actionSelectOptionFragmentToUpdateInformationFragment(getArguments().getParcelable("customer_account")).setUpdateType(UpdateType.PHONE)));
-        binding.buttonUpdateEmail.setOnClickListener(v -> NavHostFragment.findNavController(SelectOptionFragment.this).navigate(SelectOptionFragmentDirections.actionSelectOptionFragmentToUpdateInformationFragment(getArguments().getParcelable("customer_account")).setUpdateType(UpdateType.EMAIL)));
+        binding.buttonUpdatePhone.setOnClickListener(v -> NavHostFragment.findNavController(SelectOptionFragment.this).navigate(SelectOptionFragmentDirections.actionSelectOptionFragmentToUpdateInformationFragment(getArguments().getParcelable(Constants.ACCOUNT_SUMMARY_EXTRA),getArguments().getParcelable(Constants.ACCOUNT_EXTRA)).setUpdateType(UpdateType.PHONE)));
+        binding.buttonUpdateEmail.setOnClickListener(v -> NavHostFragment.findNavController(SelectOptionFragment.this).navigate(SelectOptionFragmentDirections.actionSelectOptionFragmentToUpdateInformationFragment(getArguments().getParcelable(Constants.ACCOUNT_SUMMARY_EXTRA),getArguments().getParcelable(Constants.ACCOUNT_EXTRA)).setUpdateType(UpdateType.EMAIL)));
     }
 }

@@ -18,12 +18,15 @@ import com.kiosk.accessbank.databinding.FragmentSelectAccountBinding;
 import com.kiosk.accessbank.listener.OnAccountListener;
 import com.kiosk.accessbank.source.api.ApiResponse;
 import com.kiosk.accessbank.source.model.Account;
+import com.kiosk.accessbank.source.model.AccountSummary;
 import com.kiosk.accessbank.source.model.CustomerAccount;
 import com.kiosk.accessbank.ui.adapter.ButtonAccountAdapter;
+import com.kiosk.accessbank.util.Constants;
 import com.kiosk.accessbank.viewmodel.MainViewModel;
 import com.kiosk.accessbank.viewmodel.SelectAccountViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -55,7 +58,10 @@ public class SelectAccountFragment extends Fragment implements OnAccountListener
 
         adapter = new ButtonAccountAdapter(this);
         binding.recyclerview.setAdapter(adapter);
+        binding.animationViewLoading.setVisibility(View.VISIBLE);
         selectAccountViewModel.customerAccountsLiveData.observe(getViewLifecycleOwner(), arrayListApiResponse -> {
+            binding.animationViewLoading.setVisibility(View.GONE);
+
             if (arrayListApiResponse != null) {
                 GridLayoutManager layoutManager = (GridLayoutManager) binding.recyclerview.getLayoutManager();
                 if (layoutManager != null) {
@@ -66,11 +72,23 @@ public class SelectAccountFragment extends Fragment implements OnAccountListener
             }
         });
 
+        selectAccountViewModel.accountLiveData.observe(getViewLifecycleOwner(), new Observer<>() {
+            @Override
+            public void onChanged(CustomerAccount customerAccount) {
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < customerAccount.account_no.length(); i++) {
+                    stringBuilder.append(i == 0 || i == 1 || i == customerAccount.account_no.length()-1 || i == customerAccount.account_no.length() -2 ? customerAccount.account_no.charAt(i) : "X");
+                }
+                binding.textNumber.setText(stringBuilder);
+
+            }
+        });
+
     }
 
     @Override
-    public void onClick(CustomerAccount data) {
+    public void onClick(AccountSummary data) {
 //        viewModel.setSelectedAccount(data);
-        NavHostFragment.findNavController(this).navigate(SelectAccountFragmentDirections.actionSelectAccountFragmentToSelectServiceFragment(data));
+        NavHostFragment.findNavController(this).navigate(SelectAccountFragmentDirections.actionSelectAccountFragmentToSelectServiceFragment(data,getArguments().getParcelable(Constants.ACCOUNT_EXTRA)));
     }
 }

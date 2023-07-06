@@ -16,13 +16,11 @@ import com.kiosk.accessbank.source.repository.UserRepository;
 import com.kiosk.accessbank.util.UpdateType;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -65,10 +63,6 @@ public class MainViewModel extends BaseViewModel {
     public LiveData<UpdateType> updateTypeLiveData = _updateTypeLiveData;
 
 
-
-    private final MutableLiveData<Boolean> _submittedLiveData = new MutableLiveData<>();
-
-    public LiveData<Boolean> submittedLiveData = _submittedLiveData;
     // clear those after destroyed
     private User loggedUser = null;
     private CustomerAccount selectedAccount = null;
@@ -153,7 +147,6 @@ public class MainViewModel extends BaseViewModel {
         _servicesLiveData.postValue(null);
         _selectedAccountLiveData.postValue(null);
         _updateTypeLiveData.postValue(null);
-        _submittedLiveData.postValue(null);
 
     }
 
@@ -161,11 +154,9 @@ public class MainViewModel extends BaseViewModel {
 //        _selectedAccountLiveData.postValue(selectedAccount);
     }
 
-    public void submitUpdate(UpdateType updateType, String toString) {
+    public void closeUpdateInformationSubmitTrigger(){
         _updateInformationSubmitTrigger.postValue(false);
-       _submittedLiveData.postValue(true);
     }
-
 
     //re update to false after triggering
     private MutableLiveData<Boolean> _updateInformationSubmitTrigger = new MutableLiveData<>(false);
