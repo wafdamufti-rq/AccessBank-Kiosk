@@ -59,7 +59,7 @@ public class SelectServiceFragment extends Fragment implements OnServiceListener
             }
         });
 
-        selectServiceViewModel.accountSummaryLiveData.observe(getViewLifecycleOwner(), accountSummary -> binding.textAccountName.setText(accountSummary.getAccountName()));
+        selectServiceViewModel.accountSummaryLiveData.observe(getViewLifecycleOwner(), accountSummary -> binding.textAccountName.setText(accountSummary.getAccountNo()));
     }
 
     @Override
