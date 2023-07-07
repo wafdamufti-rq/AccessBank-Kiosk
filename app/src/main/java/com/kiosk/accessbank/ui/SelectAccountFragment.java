@@ -74,10 +74,10 @@ public class SelectAccountFragment extends Fragment implements OnAccountListener
 
         selectAccountViewModel.accountLiveData.observe(getViewLifecycleOwner(), new Observer<>() {
             @Override
-            public void onChanged(CustomerAccount customerAccount) {
+            public void onChanged(String customerAccount) {
                 StringBuilder stringBuilder = new StringBuilder();
-                for (int i = 0; i < customerAccount.account_no.length(); i++) {
-                    stringBuilder.append(i == 0 || i == 1 || i == customerAccount.account_no.length()-1 || i == customerAccount.account_no.length() -2 ? customerAccount.account_no.charAt(i) : "X");
+                for (int i = 0; i < customerAccount.length(); i++) {
+                    stringBuilder.append(i == 0 || i == 1 || i == customerAccount.length()-1 || i == customerAccount.length() -2 ? customerAccount.charAt(i) : "X");
                 }
                 binding.textNumber.setText(stringBuilder);
 

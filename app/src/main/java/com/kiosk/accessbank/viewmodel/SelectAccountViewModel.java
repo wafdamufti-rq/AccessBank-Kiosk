@@ -31,8 +31,8 @@ public class SelectAccountViewModel extends BaseViewModel{
 
 
 
-    private MutableLiveData<CustomerAccount> _accountLiveData = new MutableLiveData<>();
-    public LiveData<CustomerAccount> accountLiveData = _accountLiveData;
+    private MutableLiveData<String> _accountLiveData = new MutableLiveData<>();
+    public LiveData<String> accountLiveData = _accountLiveData;
 
     public SelectAccountViewModel(){
 
@@ -42,7 +42,7 @@ public class SelectAccountViewModel extends BaseViewModel{
         this.savedStateHandle = savedStateHandle;
         this.userRepository = userRepository;
 
-        _accountLiveData.postValue(savedStateHandle.get(Constants.ACCOUNT_EXTRA));
+        _accountLiveData.postValue(savedStateHandle.get(Constants.ACCOUNT_NO_EXTRA));
     }
 
 

@@ -25,6 +25,7 @@ import com.kiosk.accessbank.camera.PositionFaceListener;
 import com.kiosk.accessbank.databinding.FragmentVerificationBinding;
 import com.kiosk.accessbank.fingerprint.FingerprintHandler;
 import com.kiosk.accessbank.source.model.CustomerAccount;
+import com.kiosk.accessbank.util.Constants;
 import com.kiosk.accessbank.util.ToastUtils;
 import com.kiosk.accessbank.viewmodel.MainViewModel;
 import com.kiosk.accessbank.viewmodel.VerificationViewModel;
@@ -107,7 +108,7 @@ public class VerificationFragment extends Fragment implements FingerprintHandler
         verificationViewModel.login(new VerificationViewModel.CustomerAccountLoginListener() {
             @Override
             public void onLogin(CustomerAccount customerAccount) {
-                NavHostFragment.findNavController(VerificationFragment.this).navigate(com.kiosk.accessbank.ui.VerificationFragmentDirections.actionVerificationFragmentToSelectAccountFragment(customerAccount));
+                NavHostFragment.findNavController(VerificationFragment.this).navigate(com.kiosk.accessbank.ui.VerificationFragmentDirections.actionVerificationFragmentToSelectAccountFragment(customerAccount,getArguments().getString(Constants.ACCOUNT_NO_EXTRA)));
                 view.setVisibility(View.GONE);
 
             }
