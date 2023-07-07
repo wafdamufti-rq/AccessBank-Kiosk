@@ -59,7 +59,14 @@ public class SelectServiceFragment extends Fragment implements OnServiceListener
             }
         });
 
-        selectServiceViewModel.accountSummaryLiveData.observe(getViewLifecycleOwner(), accountSummary -> binding.textAccountName.setText(accountSummary.getAccountName()));
+        selectServiceViewModel.accountSummaryLiveData.observe(getViewLifecycleOwner(), accountSummary -> {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < accountSummary.getAccountNo().length(); i++) {
+                stringBuilder.append(i == 0 || i == 1 || i == accountSummary.getAccountNo().length()-1 || i == accountSummary.getAccountNo().length() -2 ? accountSummary.getAccountNo().charAt(i) : "X");
+            }
+            binding.textAccountName.setText(stringBuilder);
+
+        });
     }
 
     @Override
